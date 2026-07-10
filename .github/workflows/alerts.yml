@@ -33,7 +33,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install deps
-        run: pip install requests pandas numpy ta yfinance
+        run: pip install requests "numpy<2" pandas ta yfinance
 
       - name: Run alert check
         env:
