@@ -11,6 +11,13 @@
       "level": 248.2,
       "direction": "above",
       "note": ""
+    },
+    {
+      "symbol": "BCHUSDT",
+      "market": "crypto",
+      "level": 247.0,
+      "direction": "below",
+      "note": ""
     }
   ],
   "rsi_alerts": [
@@ -19,7 +26,7 @@
       "market": "crypto",
       "interval": "5m",
       "period": 14,
-      "overbought": 40.3,
+      "overbought": 35.0,
       "oversold": 30.0
     }
   ],
