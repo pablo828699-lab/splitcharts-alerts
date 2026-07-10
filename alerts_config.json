@@ -13,7 +13,16 @@
       "note": ""
     }
   ],
-  "rsi_alerts": [],
+  "rsi_alerts": [
+    {
+      "symbol": "BCHUSDT",
+      "market": "crypto",
+      "interval": "5m",
+      "period": 14,
+      "overbought": 40.3,
+      "oversold": 30.0
+    }
+  ],
   "_ayuda": {
     "price_alerts": "direction: 'above' avisa al cruzar hacia arriba, 'below' al cruzar hacia abajo. market: 'crypto' (BTCUSDT) o 'stock' (AAPL, XAUUSD...).",
     "rsi_alerts": "interval: 1m,5m,15m,1h,4h,1d. Avisa una sola vez al ENTRAR en zona; se rearma al salir.",
