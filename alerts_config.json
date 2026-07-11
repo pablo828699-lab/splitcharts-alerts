@@ -8,14 +8,14 @@
     {
       "symbol": "BCHUSDT",
       "market": "crypto",
-      "level": 249.0,
+      "level": 250.0,
       "direction": "above",
       "note": ""
     },
     {
       "symbol": "BCHUSDT",
       "market": "crypto",
-      "level": 243.0,
+      "level": 246.0,
       "direction": "below",
       "note": ""
     },
@@ -36,7 +36,7 @@
     {
       "symbol": "BCHUSDT",
       "market": "crypto",
-      "level": 252.0,
+      "level": 255.0,
       "direction": "above",
       "note": ""
     }
@@ -45,9 +45,9 @@
     {
       "symbol": "BCHUSDT",
       "market": "crypto",
-      "interval": "1h",
+      "interval": "4h",
       "period": 14,
-      "overbought": 60.0,
+      "overbought": 72.0,
       "oversold": 40.0
     }
   ],
