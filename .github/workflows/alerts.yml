@@ -1,15 +1,12 @@
 name: SplitCharts Alerts
 
-# Corre cada 5 minutos (mínimo que permite GitHub; puede demorarse un poco más
-# en horarios de mucha carga). También se puede lanzar a mano desde la pestaña
-# Actions -> Run workflow.
+# Disparado por el pinger externo (cron-job.org) cada 5 min, o a mano.
+# (Se quitó el cron nativo de GitHub: disparaba en paralelo con el pinger y
+#  provocaba choques de push en el guardado de estado.)
 on:
-  schedule:
-    - cron: "*/5 * * * *"
-  workflow_dispatch: {}
-  # Disparo externo confiable (cron-job.org le pega a este evento cada 5 min).
   repository_dispatch:
     types: [run-alerts]
+  workflow_dispatch: {}
 
 # Permite que el job commitee de vuelta el estado (alerts_state.json).
 permissions:
@@ -43,12 +40,21 @@ jobs:
 
       - name: Persist state
         run: |
-          if [ -n "$(git status --porcelain alerts_state.json)" ]; then
-            git config user.name "splitcharts-alerts-bot"
-            git config user.email "alerts-bot@users.noreply.github.com"
-            git add alerts_state.json
-            git commit -m "update alert state [skip ci]"
-            git push
-          else
-            echo "sin cambios de estado"
+          if [ -z "$(git status --porcelain alerts_state.json)" ]; then
+            echo "sin cambios de estado"; exit 0
           fi
+          git config user.name "splitcharts-alerts-bot"
+          git config user.email "alerts-bot@users.noreply.github.com"
+          git add alerts_state.json
+          git commit -m "update alert state [skip ci]"
+          # Reintentar contra carreras: traer lo último (conservando nuestro
+          # estado en conflicto) y empujar. Nunca falla la corrida por esto.
+          for i in 1 2 3 4 5; do
+            git fetch origin main -q || true
+            git rebase -X ours origin/main -q || git rebase --abort || true
+            if git push origin HEAD:main; then
+              echo "estado guardado"; exit 0
+            fi
+            echo "push rechazado, reintento $i..."; sleep 3
+          done
+          echo "no se pudo guardar el estado (se reintenta la proxima corrida)"; exit 0
