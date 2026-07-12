@@ -22,16 +22,16 @@
     {
       "symbol": "BTCUSDT",
       "market": "crypto",
-      "level": 65000.0,
+      "level": 64700.0,
       "direction": "above",
-      "note": ""
+      "note": "objetivo 68 mil"
     },
     {
       "symbol": "BTCUSDT",
       "market": "crypto",
-      "level": 63600.0,
+      "level": 63250.0,
       "direction": "below",
-      "note": ""
+      "note": "ver en 60 mil otra parada 56 mil"
     },
     {
       "symbol": "BCHUSDT",
