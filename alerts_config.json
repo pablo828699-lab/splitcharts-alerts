@@ -39,6 +39,13 @@
       "level": 250.0,
       "direction": "above",
       "note": ""
+    },
+    {
+      "symbol": "TRXUSDT",
+      "market": "crypto",
+      "level": 0.3269,
+      "direction": "above",
+      "note": "obj 0.3291"
     }
   ],
   "rsi_alerts": [
