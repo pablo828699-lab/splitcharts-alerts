@@ -15,7 +15,7 @@
     {
       "symbol": "BTCUSDT",
       "market": "crypto",
-      "level": 61240.0,
+      "level": 63000.0,
       "direction": "below",
       "note": "ver en 60 mil otra parada 56 mil"
     },
@@ -38,6 +38,13 @@
       "market": "crypto",
       "level": 1830.0,
       "direction": "below",
+      "note": ""
+    },
+    {
+      "symbol": "BTCUSDT",
+      "market": "crypto",
+      "level": 65000.0,
+      "direction": "above",
       "note": ""
     }
   ],
