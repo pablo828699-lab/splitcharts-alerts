@@ -41,6 +41,34 @@
       "note": "long a 67000"
     },
     {
+      "symbol": "BTCUSDT",
+      "market": "crypto",
+      "level": 62852.0,
+      "direction": "below",
+      "note": "INVALIDA largo BTC (pierde shelf 4H) -> stand aside / 61250-60000"
+    },
+    {
+      "symbol": "ETHUSDT",
+      "market": "crypto",
+      "level": 1985.0,
+      "direction": "above",
+      "note": "ETH toca el MURO -> vigilar rechazo para short (SL >2032)"
+    },
+    {
+      "symbol": "ETHUSDT",
+      "market": "crypto",
+      "level": 2032.0,
+      "direction": "above",
+      "note": "BREAKOUT ETH sobre el muro -> objetivo 2325"
+    },
+    {
+      "symbol": "ETHUSDT",
+      "market": "crypto",
+      "level": 1773.0,
+      "direction": "below",
+      "note": "INVALIDA largo ETH (pierde base 4H)"
+    },
+    {
       "symbol": "KEEL",
       "market": "stock",
       "level": 4.2,
