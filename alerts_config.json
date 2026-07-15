@@ -6,25 +6,11 @@
   "poll_seconds": 60,
   "price_alerts": [
     {
-      "symbol": "IBM",
-      "market": "stock",
-      "level": 226.0,
-      "direction": "above",
-      "note": "cerrar long"
-    },
-    {
       "symbol": "BTCUSDT",
       "market": "crypto",
       "level": 64300.0,
       "direction": "below",
       "note": "ver en 60 mil otra parada 56 mil"
-    },
-    {
-      "symbol": "IBM",
-      "market": "stock",
-      "level": 215.0,
-      "direction": "below",
-      "note": "ver stop loss"
     },
     {
       "symbol": "ETHUSDT",
