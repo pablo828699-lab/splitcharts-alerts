@@ -21,7 +21,7 @@
     },
     {
       "symbol": "IBM",
-      "market": "crypto",
+      "market": "stock",
       "level": 215.0,
       "direction": "below",
       "note": "ver stop loss"
