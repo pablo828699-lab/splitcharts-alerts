@@ -20,13 +20,6 @@
       "note": "busque la demanda 1.841  rebote hacia 1.908 → 1.927"
     },
     {
-      "symbol": "BTCUSDT",
-      "market": "crypto",
-      "level": 64700.0,
-      "direction": "above",
-      "note": ""
-    },
-    {
       "symbol": "ETHUSDT",
       "market": "crypto",
       "level": 1985.0,
@@ -50,7 +43,7 @@
     {
       "symbol": "META",
       "market": "stock",
-      "level": 672.75,
+      "level": 669.0,
       "direction": "below",
       "note": "long a 690"
     },
