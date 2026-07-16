@@ -60,6 +60,13 @@
       "level": 64400.0,
       "direction": "below",
       "note": ""
+    },
+    {
+      "symbol": "XAUUSD",
+      "market": "stock",
+      "level": 3991.0,
+      "direction": "below",
+      "note": ""
     }
   ],
   "rsi_alerts": [],
