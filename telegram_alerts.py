@@ -181,7 +181,23 @@ def check_price_alerts(cfg, state, tg, price_cache):
         prev = state.get(key)
         state[key] = px
         if prev is None:
-            continue  # primera lectura: solo registrar, no disparar
+            # Primera lectura de esta alerta. Un cruce solo se detecta comparando
+            # dos lecturas, así que si el precio YA está del lado cumplido la
+            # alerta nunca dispararía (nace "pasada"): con la nube leyendo cada
+            # 5 min, cualquier nivel cerca del precio cae en este caso. Avisar
+            # una vez en lugar de armarla muerta en silencio.
+            already = ((direction == "above" and px >= level) or
+                       (direction == "below" and px <= level))
+            if already:
+                side = "por encima de" if direction == "above" else "por debajo de"
+                msg = (f"⚠️ <b>{symbol}</b> ya estaba {side} <b>{_fmt(level)}</b> "
+                       f"al crear la alerta\nPrecio: <b>{_fmt(px)}</b>\n"
+                       f"<i>Sin aviso de cruce hasta que vuelva al otro lado y "
+                       f"lo cruce de nuevo.</i>")
+                if note:
+                    msg += f"\n<i>{note}</i>"
+                _fire(tg, msg, key)
+            continue
 
         crossed = (
             (direction == "above" and prev < level <= px) or
