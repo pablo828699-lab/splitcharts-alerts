@@ -8,49 +8,42 @@
     {
       "symbol": "BTCUSDT",
       "market": "crypto",
-      "level": 63900.0,
+      "level": 63944.0,
       "direction": "above",
       "note": "Reacción en 64.106 – 63.699 y recuperación de 64.392 (CHoCH down 1H)."
     },
     {
       "symbol": "ETHUSDT",
       "market": "crypto",
-      "level": 1850.0,
+      "level": 1825.0,
       "direction": "below",
-      "note": "busque la demanda 1.841  rebote hacia 1.908 → 1.927"
+      "note": "bjetivos: 1.795 – 1.799 (VAL 1H) → 1.773 = invalidación."
     },
     {
       "symbol": "ETHUSDT",
       "market": "crypto",
-      "level": 1908.0,
+      "level": 1850.0,
       "direction": "above",
-      "note": "ETH toca el MURO -> vigilar rechazo para short (SL >2032)"
-    },
-    {
-      "symbol": "ETHUSDT",
-      "market": "crypto",
-      "level": 2032.0,
-      "direction": "above",
-      "note": "BREAKOUT ETH sobre el muro -> objetivo 2325"
+      "note": "Defiende 1.846 (o reacciona en 1.825 – 1.829)"
     },
     {
       "symbol": "ETHUSDT",
       "market": "crypto",
       "level": 1773.0,
       "direction": "below",
-      "note": "INVALIDA largo ETH (pierde base 4H)"
+      "note": "BDebajo de 1.773: 1.723 – 1.714 (basis/VWAP 4H) y"
     },
     {
       "symbol": "XAUUSD",
       "market": "stock",
-      "level": 3950.0,
+      "level": 3926.0,
       "direction": "below",
-      "note": "air pocket hacia 3.766 → 3.672 (extremo diario)."
+      "note": "Objetivo: 3.840 (F"
     },
     {
       "symbol": "XAUUSD",
       "market": "stock",
-      "level": 4000.0,
+      "level": 3942.0,
       "direction": "above",
       "note": "3.993 – 4.022 con volumen. Objetivos: 4.033 → 4.051 → 4.066 (volver a valor)"
     },
