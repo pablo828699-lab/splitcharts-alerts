@@ -145,6 +145,35 @@ def get_price(symbol, market):
     return float(df["close"].iloc[-1])
 
 
+def _price_window(symbol, market, since_ts, cache):
+    """Precio actual + mínimo/máximo desde `since_ts`.
+
+    Mirar solo el precio spot pierde los toques que ocurren ENTRE dos lecturas:
+    un pinchazo de 10s es invisible si el poller pasa cada 5 min. Tomando el
+    min/max de las velas de 1m posteriores a la última revisión, ningún toque
+    del nivel se escapa, sin importar la cadencia.
+
+    Devuelve (precio, minimo, maximo). Sin `since_ts` (primera corrida) o si las
+    velas fallan, cae al precio spot -> (px, px, px), el comportamiento previo.
+    """
+    ck = (symbol, market)
+    if ck in cache:
+        return cache[ck]
+    px = get_price(symbol, market)
+    lo = hi = px
+    if since_ts:
+        try:
+            df = ds.get_ohlcv(market, symbol, "1m", 90)
+            df = df[df["time"] > int(since_ts)]
+            if len(df):
+                lo = min(px, float(df["low"].min()))
+                hi = max(px, float(df["high"].max()))
+        except Exception as exc:
+            print(f"[{_now()}] velas 1m de {symbol} no disponibles ({exc}); uso precio spot")
+    cache[ck] = (px, lo, hi)
+    return cache[ck]
+
+
 def get_rsi(symbol, market, interval, period=14):
     df = ds.get_ohlcv(market, symbol, interval, 200)
     osc = compute_oscillators(df, {"rsi": True, "rsi_period": period, "macd": False})
@@ -162,6 +191,7 @@ def _fmt(v):
 # Evaluación de reglas
 # ---------------------------------------------------------------------------
 def check_price_alerts(cfg, state, tg, price_cache):
+    since = state.get("_last_check")
     for a in cfg.get("price_alerts", []):
         symbol = a["symbol"].upper()
         market = a.get("market", "crypto")
@@ -169,11 +199,8 @@ def check_price_alerts(cfg, state, tg, price_cache):
         direction = a.get("direction", "above").lower()
         note = a.get("note", "")
         key = f"px|{symbol}|{market}|{level}|{direction}"
-        ck = (symbol, market)
         try:
-            if ck not in price_cache:
-                price_cache[ck] = get_price(symbol, market)
-            px = price_cache[ck]
+            px, lo, hi = _price_window(symbol, market, since, price_cache)
         except Exception as exc:
             print(f"[{_now()}] precio {symbol} error: {exc}")
             continue
@@ -199,17 +226,27 @@ def check_price_alerts(cfg, state, tg, price_cache):
                 _fire(tg, msg, key)
             continue
 
-        crossed = (
-            (direction == "above" and prev < level <= px) or
-            (direction == "below" and prev > level >= px)
-        )
+        # El nivel cuenta como cruzado si lo tocó en CUALQUIER momento desde la
+        # lectura anterior, aunque el precio ya haya rebotado (mecha).
+        if direction == "above":
+            crossed, extremo = (prev < level and hi >= level), hi
+        else:
+            crossed, extremo = (prev > level and lo <= level), lo
         if crossed:
             arrow = "⬆️ hacia arriba" if direction == "above" else "⬇️ hacia abajo"
             msg = (f"🔔 <b>{symbol}</b> cruzó <b>{_fmt(level)}</b> {arrow}\n"
                    f"Precio: <b>{_fmt(px)}</b>")
+            volvio = ((direction == "above" and px < level) or
+                      (direction == "below" and px > level))
+            if volvio:
+                msg += f"\n<i>Tocó {_fmt(extremo)} y ya volvió.</i>"
             if note:
                 msg += f"\n<i>{note}</i>"
             _fire(tg, msg, key)
+
+    # Marca hasta dónde se miraron las velas: la próxima pasada solo evalúa lo
+    # ocurrido después, así ningún toque se cuenta (ni avisa) dos veces.
+    state["_last_check"] = int(time.time())
 
 
 def check_rsi_alerts(cfg, state, tg):
