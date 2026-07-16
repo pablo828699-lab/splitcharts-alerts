@@ -53,6 +53,13 @@
       "level": 678.0,
       "direction": "below",
       "note": "long a 690"
+    },
+    {
+      "symbol": "AMZN",
+      "market": "stock",
+      "level": 254.0,
+      "direction": "below",
+      "note": "backtest de 252.52 – 253.83 que, sosteniéndose, sirva de trampolín hacia 260.31 y luego 268 – 270.64."
     }
   ],
   "rsi_alerts": [],
