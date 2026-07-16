@@ -46,6 +46,13 @@
       "level": 1773.0,
       "direction": "below",
       "note": "INVALIDA largo ETH (pierde base 4H)"
+    },
+    {
+      "symbol": "META",
+      "market": "stock",
+      "level": 678.0,
+      "direction": "below",
+      "note": "long a 690"
     }
   ],
   "rsi_alerts": [],
