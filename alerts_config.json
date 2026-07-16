@@ -57,8 +57,8 @@
     {
       "symbol": "BTCUSDT",
       "market": "crypto",
-      "level": 64515.0,
-      "direction": "above",
+      "level": 64400.0,
+      "direction": "below",
       "note": ""
     }
   ],
