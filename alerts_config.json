@@ -8,44 +8,23 @@
     {
       "symbol": "BTCUSDT",
       "market": "crypto",
-      "level": 64300.0,
+      "level": 64100.0,
       "direction": "below",
-      "note": "ver en 60 mil otra parada 56 mil"
+      "note": "Reacción en 64.106 – 63.699 y recuperación de 64.392 (CHoCH down 1H)."
     },
     {
       "symbol": "ETHUSDT",
       "market": "crypto",
-      "level": 1900.0,
+      "level": 1850.0,
       "direction": "below",
-      "note": "long a 2000"
-    },
-    {
-      "symbol": "ETHUSDT",
-      "market": "crypto",
-      "level": 1870.0,
-      "direction": "above",
-      "note": "long a 2000"
+      "note": "busque la demanda 1.841  rebote hacia 1.908 → 1.927"
     },
     {
       "symbol": "BTCUSDT",
       "market": "crypto",
-      "level": 65617.0,
+      "level": 64700.0,
       "direction": "above",
       "note": ""
-    },
-    {
-      "symbol": "BTCUSDT",
-      "market": "crypto",
-      "level": 64400.0,
-      "direction": "below",
-      "note": "long a 67000"
-    },
-    {
-      "symbol": "BTCUSDT",
-      "market": "crypto",
-      "level": 62852.0,
-      "direction": "below",
-      "note": "INVALIDA largo BTC (pierde shelf 4H) -> stand aside / 61250-60000"
     },
     {
       "symbol": "ETHUSDT",
@@ -67,13 +46,6 @@
       "level": 1773.0,
       "direction": "below",
       "note": "INVALIDA largo ETH (pierde base 4H)"
-    },
-    {
-      "symbol": "KEEL",
-      "market": "stock",
-      "level": 4.2,
-      "direction": "below",
-      "note": ""
     }
   ],
   "rsi_alerts": [],
