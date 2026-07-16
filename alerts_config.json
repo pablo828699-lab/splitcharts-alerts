@@ -22,7 +22,7 @@
     {
       "symbol": "ETHUSDT",
       "market": "crypto",
-      "level": 1985.0,
+      "level": 1908.0,
       "direction": "above",
       "note": "ETH toca el MURO -> vigilar rechazo para short (SL >2032)"
     },
@@ -41,32 +41,18 @@
       "note": "INVALIDA largo ETH (pierde base 4H)"
     },
     {
-      "symbol": "META",
+      "symbol": "XAUUSD",
       "market": "stock",
-      "level": 669.0,
+      "level": 3950.0,
       "direction": "below",
-      "note": "long a 690"
-    },
-    {
-      "symbol": "AMZN",
-      "market": "stock",
-      "level": 254.0,
-      "direction": "below",
-      "note": "backtest de 252.52 – 253.83 que, sosteniéndose, sirva de trampolín hacia 260.31 y luego 268 – 270.64."
-    },
-    {
-      "symbol": "BTCUSDT",
-      "market": "crypto",
-      "level": 64260.0,
-      "direction": "below",
-      "note": ""
+      "note": "air pocket hacia 3.766 → 3.672 (extremo diario)."
     },
     {
       "symbol": "XAUUSD",
       "market": "stock",
-      "level": 3991.0,
-      "direction": "below",
-      "note": ""
+      "level": 4000.0,
+      "direction": "above",
+      "note": "3.993 – 4.022 con volumen. Objetivos: 4.033 → 4.051 → 4.066 (volver a valor)"
     }
   ],
   "rsi_alerts": [],
