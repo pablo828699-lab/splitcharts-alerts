@@ -8,8 +8,8 @@
     {
       "symbol": "BTCUSDT",
       "market": "crypto",
-      "level": 64100.0,
-      "direction": "below",
+      "level": 63900.0,
+      "direction": "above",
       "note": "Reacción en 64.106 – 63.699 y recuperación de 64.392 (CHoCH down 1H)."
     },
     {
@@ -53,6 +53,13 @@
       "level": 4000.0,
       "direction": "above",
       "note": "3.993 – 4.022 con volumen. Objetivos: 4.033 → 4.051 → 4.066 (volver a valor)"
+    },
+    {
+      "symbol": "BTCUSDT",
+      "market": "crypto",
+      "level": 63540.0,
+      "direction": "below",
+      "note": "Perder 63.541 abre 63.312 y luego el shelf 62.852 = invalidación."
     }
   ],
   "rsi_alerts": [],
