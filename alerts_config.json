@@ -50,9 +50,9 @@
     {
       "symbol": "BTCUSDT",
       "market": "crypto",
-      "level": 63540.0,
+      "level": 62300.0,
       "direction": "below",
-      "note": "Perder 63.541 abre 63.312 y luego el shelf 62.852 = invalidación."
+      "note": "Pvender"
     }
   ],
   "rsi_alerts": [],
