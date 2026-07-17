@@ -43,7 +43,7 @@
     {
       "symbol": "XAUUSD",
       "market": "stock",
-      "level": 3942.0,
+      "level": 4022.0,
       "direction": "above",
       "note": "3.993 – 4.022 con volumen. Objetivos: 4.033 → 4.051 → 4.066 (volver a valor)"
     },
@@ -53,6 +53,13 @@
       "level": 62300.0,
       "direction": "below",
       "note": "Pvender"
+    },
+    {
+      "symbol": "GGAL",
+      "market": "stock",
+      "level": 48.0,
+      "direction": "below",
+      "note": "analizar compra opciones"
     }
   ],
   "rsi_alerts": [],
