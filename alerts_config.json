@@ -34,18 +34,18 @@
       "note": "BDebajo de 1.773: 1.723 – 1.714 (basis/VWAP 4H) y"
     },
     {
-      "symbol": "XAUUSD",
+      "symbol": "GOOGL",
       "market": "stock",
-      "level": 3926.0,
+      "level": 342.0,
       "direction": "below",
-      "note": "Objetivo: 3.840 (F"
+      "note": "cerrar long"
     },
     {
-      "symbol": "XAUUSD",
+      "symbol": "NFLX",
       "market": "stock",
-      "level": 4022.0,
-      "direction": "above",
-      "note": "3.993 – 4.022 con volumen. Objetivos: 4.033 → 4.051 → 4.066 (volver a valor)"
+      "level": 68.7,
+      "direction": "below",
+      "note": "ver long"
     },
     {
       "symbol": "BTCUSDT",
