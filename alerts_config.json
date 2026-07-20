@@ -6,11 +6,11 @@
   "poll_seconds": 60,
   "price_alerts": [
     {
-      "symbol": "NFLX",
+      "symbol": "ORCL",
       "market": "stock",
-      "level": 68.7,
-      "direction": "below",
-      "note": "ver long"
+      "level": 126.0,
+      "direction": "above",
+      "note": "ver long cerrar en 128"
     },
     {
       "symbol": "BTCUSDT",
@@ -20,11 +20,11 @@
       "note": "Pvender"
     },
     {
-      "symbol": "GGAL",
+      "symbol": "ORCL",
       "market": "stock",
-      "level": 48.0,
-      "direction": "below",
-      "note": "analizar compra opciones"
+      "level": 127.0,
+      "direction": "above",
+      "note": "cerrar trade"
     }
   ],
   "rsi_alerts": [],
