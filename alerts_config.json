@@ -32,6 +32,13 @@
       "level": 1880.0,
       "direction": "below",
       "note": "Los pullbacks a 1.874 / 1.850 son recompra mientras aguanten"
+    },
+    {
+      "symbol": "AAPL",
+      "market": "stock",
+      "level": 313.0,
+      "direction": "below",
+      "note": "pausa / pullback superficial hacia 313 – 303 antes de retomar; el techo a batir es la confluencia 334 – 335"
     }
   ],
   "rsi_alerts": [],
