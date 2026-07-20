@@ -6,41 +6,6 @@
   "poll_seconds": 60,
   "price_alerts": [
     {
-      "symbol": "BTCUSDT",
-      "market": "crypto",
-      "level": 63944.0,
-      "direction": "above",
-      "note": "Reacción en 64.106 – 63.699 y recuperación de 64.392 (CHoCH down 1H)."
-    },
-    {
-      "symbol": "ETHUSDT",
-      "market": "crypto",
-      "level": 1825.0,
-      "direction": "below",
-      "note": "bjetivos: 1.795 – 1.799 (VAL 1H) → 1.773 = invalidación."
-    },
-    {
-      "symbol": "ETHUSDT",
-      "market": "crypto",
-      "level": 1845.0,
-      "direction": "above",
-      "note": "Defiende 1.846 (o reacciona en 1.825 – 1.829)"
-    },
-    {
-      "symbol": "ETHUSDT",
-      "market": "crypto",
-      "level": 1773.0,
-      "direction": "below",
-      "note": "BDebajo de 1.773: 1.723 – 1.714 (basis/VWAP 4H) y"
-    },
-    {
-      "symbol": "GOOGL",
-      "market": "stock",
-      "level": 342.0,
-      "direction": "below",
-      "note": "cerrar long"
-    },
-    {
       "symbol": "NFLX",
       "market": "stock",
       "level": 68.7,
