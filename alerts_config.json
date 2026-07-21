@@ -8,21 +8,21 @@
     {
       "symbol": "ORCL",
       "market": "stock",
-      "level": 126.0,
+      "level": 127.0,
       "direction": "above",
       "note": "ver long cerrar en 128"
     },
     {
       "symbol": "BTCUSDT",
       "market": "crypto",
-      "level": 65748.0,
+      "level": 67200.0,
       "direction": "above",
       "note": "Pvender"
     },
     {
-      "symbol": "ORCL",
+      "symbol": "TSLA",
       "market": "stock",
-      "level": 127.0,
+      "level": 393.0,
       "direction": "above",
       "note": "cerrar trade"
     },
@@ -34,10 +34,10 @@
       "note": "Los pullbacks a 1.874 / 1.850 son recompra mientras aguanten"
     },
     {
-      "symbol": "AAPL",
+      "symbol": "LLY",
       "market": "stock",
-      "level": 313.0,
-      "direction": "below",
+      "level": 1178.0,
+      "direction": "above",
       "note": "pausa / pullback superficial hacia 313 – 303 antes de retomar; el techo a batir es la confluencia 334 – 335"
     },
     {
