@@ -53,6 +53,13 @@
       "level": 4099.0,
       "direction": "below",
       "note": "un backtest a 4.081 – 4.099 antes de atacar los huecos de 4.188 – 4.224. Confirmación: cerrar sobre 4.224. Anulación: pe"
+    },
+    {
+      "symbol": "IBM",
+      "market": "crypto",
+      "level": 199.0,
+      "direction": "below",
+      "note": "ver long"
     }
   ],
   "rsi_alerts": [],
