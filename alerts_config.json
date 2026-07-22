@@ -46,6 +46,13 @@
       "level": 4.73,
       "direction": "above",
       "note": "comprar recién con el reclaim de 4.73 – 4.81, o abandonar la idea larga si pierde 4.197."
+    },
+    {
+      "symbol": "XAUUSD",
+      "market": "stock",
+      "level": 4099.0,
+      "direction": "below",
+      "note": "un backtest a 4.081 – 4.099 antes de atacar los huecos de 4.188 – 4.224. Confirmación: cerrar sobre 4.224. Anulación: pe"
     }
   ],
   "rsi_alerts": [],
