@@ -55,11 +55,18 @@
       "note": "un backtest a 4.081 – 4.099 antes de atacar los huecos de 4.188 – 4.224. Confirmación: cerrar sobre 4.224. Anulación: pe"
     },
     {
-      "symbol": "IBM",
+      "symbol": "ETHUSDT",
       "market": "crypto",
-      "level": 199.0,
+      "level": 1919.0,
+      "direction": "above",
+      "note": "Reclaim de 1.921 → vuelve el intento hacia 1.950 – 1.969. Pérdida de 1.867 → corrección hasta la zona fuerte de 1.825 – "
+    },
+    {
+      "symbol": "ETHUSDT",
+      "market": "crypto",
+      "level": 1896.0,
       "direction": "below",
-      "note": "ver long"
+      "note": "Reclaim de 1.921 → vuelve el intento hacia 1.950 – 1.969. Pérdida de 1.867 → corrección hasta la zona fuerte de 1.825 – "
     }
   ],
   "rsi_alerts": [],
