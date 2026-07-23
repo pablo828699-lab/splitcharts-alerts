@@ -6,11 +6,11 @@
   "poll_seconds": 60,
   "price_alerts": [
     {
-      "symbol": "ORCL",
+      "symbol": "TSLA",
       "market": "stock",
-      "level": 127.0,
-      "direction": "above",
-      "note": "ver long cerrar en 128"
+      "level": 325.0,
+      "direction": "below",
+      "note": "335,69 (mínimo). Aguanta y cierra fuerte → rebote a 341 – 353. Lo pierde → 326,31 y después no hay referencia hasta 273,"
     },
     {
       "symbol": "BTCUSDT",
@@ -59,14 +59,21 @@
       "market": "crypto",
       "level": 1919.0,
       "direction": "above",
-      "note": "Reclaim de 1.921 → vuelve el intento hacia 1.950 – 1.969. Pérdida de 1.867 → corrección hasta la zona fuerte de 1.825 – "
+      "note": "Reclaim de 1.921 → vuelve el intento hacia 1.950 – 1.969. Pérdida de 1.867 → corrección hasta la zona fuerte de 1.825 –"
     },
     {
       "symbol": "ETHUSDT",
       "market": "crypto",
       "level": 1896.0,
       "direction": "below",
-      "note": "Reclaim de 1.921 → vuelve el intento hacia 1.950 – 1.969. Pérdida de 1.867 → corrección hasta la zona fuerte de 1.825 – "
+      "note": "Reclaim de 1.921 → vuelve el intento hacia 1.950 – 1.969. Pérdida de 1.867 → corrección hasta la zona fuerte de 1.825 –"
+    },
+    {
+      "symbol": "TSLA",
+      "market": "crypto",
+      "level": 300.0,
+      "direction": "below",
+      "note": "335,69 (mínimo). Aguanta y cierra fuerte → rebote a 341 – 353. Lo pierde → 326,31 y después no hay referencia hasta 273,"
     }
   ],
   "rsi_alerts": [],
