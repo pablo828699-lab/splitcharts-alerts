@@ -74,6 +74,20 @@
       "level": 300.0,
       "direction": "below",
       "note": "335,69 (mínimo). Aguanta y cierra fuerte → rebote a 341 – 353. Lo pierde → 326,31 y después no hay referencia hasta 273,"
+    },
+    {
+      "symbol": "GOOGL",
+      "market": "stock",
+      "level": 320.0,
+      "direction": "above",
+      "note": "18,24. Aguanta → estabilización 318 – 326 y luego intento hacia 335 – 336. Lo pierde → 303 – 307 (POC diario + entry del"
+    },
+    {
+      "symbol": "GOOGL",
+      "market": "crypto",
+      "level": 315.0,
+      "direction": "below",
+      "note": "18,24. Aguanta → estabilización 318 – 326 y luego intento hacia 335 – 336. Lo pierde → 303 – 307 (POC diario + entry del"
     }
   ],
   "rsi_alerts": [],
