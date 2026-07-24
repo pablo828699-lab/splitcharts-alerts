@@ -15,9 +15,9 @@
     {
       "symbol": "BTCUSDT",
       "market": "crypto",
-      "level": 64700.0,
+      "level": 63300.0,
       "direction": "below",
-      "note": "ango de decisión: 64.700 – 65.554. Rebote y reclaim de 65.554 → la corrección fue sana y vuelve 66.5 – 67.5. Cierre de 4"
+      "note": "Rango de decisión: 63.541 – 64.700. Rebote y reclaim de 64.700 → intento de recuperación. Pérdida de 63.541 con volumen "
     },
     {
       "symbol": "LLY",
@@ -29,9 +29,9 @@
     {
       "symbol": "BTCUSDT",
       "market": "crypto",
-      "level": 65400.0,
+      "level": 63600.0,
       "direction": "above",
-      "note": "ango de decisión: 64.700 – 65.554. Rebote y reclaim de 65.554 → la corrección fue sana y vuelve 66.5 – 67.5. Cierre de 4"
+      "note": "Rango de decisión: 63.541 – 64.700. Rebote y reclaim de 64.700 → intento de recuperación. Pérdida de 63.541 con volumen "
     },
     {
       "symbol": "LLY",
