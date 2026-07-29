@@ -11,6 +11,20 @@
       "level": 1870.0,
       "direction": "below",
       "note": "ver como se comporta en la de 21"
+    },
+    {
+      "symbol": "TSLA",
+      "market": "stock",
+      "level": 300.0,
+      "direction": "below",
+      "note": "ver freno en 290"
+    },
+    {
+      "symbol": "TSLA",
+      "market": "stock",
+      "level": 290.0,
+      "direction": "below",
+      "note": "ver long"
     }
   ],
   "rsi_alerts": [],
