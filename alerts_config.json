@@ -25,6 +25,13 @@
       "level": 290.0,
       "direction": "below",
       "note": "ver long"
+    },
+    {
+      "symbol": "NFLX",
+      "market": "stock",
+      "level": 74.4,
+      "direction": "above",
+      "note": "abrir long"
     }
   ],
   "rsi_alerts": [],
