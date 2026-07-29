@@ -6,88 +6,11 @@
   "poll_seconds": 60,
   "price_alerts": [
     {
-      "symbol": "TSLA",
-      "market": "stock",
-      "level": 325.0,
-      "direction": "below",
-      "note": "335,69 (mínimo). Aguanta y cierra fuerte → rebote a 341 – 353. Lo pierde → 326,31 y después no hay referencia hasta 273,"
-    },
-    {
-      "symbol": "BTCUSDT",
+      "symbol": "ETHUSTD",
       "market": "crypto",
-      "level": 63300.0,
+      "level": 1870.0,
       "direction": "below",
-      "note": "Rango de decisión: 63.541 – 64.700. Rebote y reclaim de 64.700 → intento de recuperación. Pérdida de 63.541 con volumen "
-    },
-    {
-      "symbol": "LLY",
-      "market": "stock",
-      "level": 1140.0,
-      "direction": "below",
-      "note": "ver long"
-    },
-    {
-      "symbol": "BTCUSDT",
-      "market": "crypto",
-      "level": 63800.0,
-      "direction": "above",
-      "note": "Rango de decisión: 63.541 – 64.700. Rebote y reclaim de 64.700 → intento de recuperación. Pérdida de 63.541 con volumen "
-    },
-    {
-      "symbol": "LLY",
-      "market": "stock",
-      "level": 1178.0,
-      "direction": "above",
-      "note": "pausa / pullback superficial hacia 313 – 303 antes de retomar; el techo a batir es la confluencia 334 – 335"
-    },
-    {
-      "symbol": "KEEL",
-      "market": "stock",
-      "level": 4.73,
-      "direction": "above",
-      "note": "comprar recién con el reclaim de 4.73 – 4.81, o abandonar la idea larga si pierde 4.197."
-    },
-    {
-      "symbol": "XAUUSD",
-      "market": "stock",
-      "level": 4099.0,
-      "direction": "below",
-      "note": "un backtest a 4.081 – 4.099 antes de atacar los huecos de 4.188 – 4.224. Confirmación: cerrar sobre 4.224. Anulación: pe"
-    },
-    {
-      "symbol": "ETHUSDT",
-      "market": "crypto",
-      "level": 1880.0,
-      "direction": "above",
-      "note": "rebote y reclaim de 1.900 → alivio de corto. Prueba del corazón 1.825 – 1.833 → donde el diario debe sostenerse. Cierre "
-    },
-    {
-      "symbol": "ETHUSDT",
-      "market": "crypto",
-      "level": 1840.0,
-      "direction": "below",
-      "note": "rebote y reclaim de 1.900 → alivio de corto. Prueba del corazón 1.825 – 1.833 → donde el diario debe sostenerse. Cierre "
-    },
-    {
-      "symbol": "TSLA",
-      "market": "crypto",
-      "level": 300.0,
-      "direction": "below",
-      "note": "335,69 (mínimo). Aguanta y cierra fuerte → rebote a 341 – 353. Lo pierde → 326,31 y después no hay referencia hasta 273,"
-    },
-    {
-      "symbol": "GOOGL",
-      "market": "stock",
-      "level": 320.0,
-      "direction": "above",
-      "note": "18,24. Aguanta → estabilización 318 – 326 y luego intento hacia 335 – 336. Lo pierde → 303 – 307 (POC diario + entry del"
-    },
-    {
-      "symbol": "GOOGL",
-      "market": "crypto",
-      "level": 315.0,
-      "direction": "below",
-      "note": "18,24. Aguanta → estabilización 318 – 326 y luego intento hacia 335 – 336. Lo pierde → 303 – 307 (POC diario + entry del"
+      "note": "ver como se comporta en la de 21"
     }
   ],
   "rsi_alerts": [],
