@@ -6,25 +6,11 @@
   "poll_seconds": 60,
   "price_alerts": [
     {
-      "symbol": "ETHUSTD",
-      "market": "crypto",
-      "level": 1870.0,
-      "direction": "below",
-      "note": "ver como se comporta en la de 21"
-    },
-    {
-      "symbol": "TSLA",
+      "symbol": "MU",
       "market": "stock",
-      "level": 300.0,
-      "direction": "below",
-      "note": "ver freno en 290"
-    },
-    {
-      "symbol": "TSLA",
-      "market": "stock",
-      "level": 290.0,
-      "direction": "below",
-      "note": "ver long"
+      "level": 924.0,
+      "direction": "above",
+      "note": "ver long a 1020"
     },
     {
       "symbol": "NFLX",
