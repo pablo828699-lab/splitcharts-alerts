@@ -18,6 +18,13 @@
       "level": 74.4,
       "direction": "above",
       "note": "abrir long"
+    },
+    {
+      "symbol": "NATGAS",
+      "market": "stock",
+      "level": 2.8,
+      "direction": "above",
+      "note": "ver long"
     }
   ],
   "rsi_alerts": [],
