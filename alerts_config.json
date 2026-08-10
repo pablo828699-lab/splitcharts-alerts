@@ -39,6 +39,13 @@
       "level": 74.0,
       "direction": "below",
       "note": "ver soporte"
+    },
+    {
+      "symbol": "SILVER",
+      "market": "stock",
+      "level": 66.7,
+      "direction": "above",
+      "note": "long a 73"
     }
   ],
   "rsi_alerts": [],
