@@ -32,6 +32,13 @@
       "level": 343.0,
       "direction": "above",
       "note": "long"
+    },
+    {
+      "symbol": "RKLBBUSDT",
+      "market": "crypto",
+      "level": 74.0,
+      "direction": "below",
+      "note": "ver soporte"
     }
   ],
   "rsi_alerts": [],
