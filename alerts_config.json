@@ -46,6 +46,13 @@
       "level": 66.7,
       "direction": "above",
       "note": "long a 73"
+    },
+    {
+      "symbol": "COIN",
+      "market": "stock",
+      "level": 159.0,
+      "direction": "above",
+      "note": "ver long"
     }
   ],
   "rsi_alerts": [],
