@@ -88,6 +88,13 @@
       "level": 159.0,
       "direction": "below",
       "note": "corto a 138"
+    },
+    {
+      "symbol": "SPCX",
+      "market": "stock",
+      "level": 129.5,
+      "direction": "below",
+      "note": "short a 119"
     }
   ],
   "rsi_alerts": [
