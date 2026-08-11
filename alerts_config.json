@@ -81,6 +81,13 @@
       "level": 44.0,
       "direction": "below",
       "note": "ver entrada"
+    },
+    {
+      "symbol": "PLTR",
+      "market": "stock",
+      "level": 159.0,
+      "direction": "below",
+      "note": "corto a 138"
     }
   ],
   "rsi_alerts": [
