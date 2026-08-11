@@ -53,6 +53,13 @@
       "level": 159.0,
       "direction": "above",
       "note": "ver long"
+    },
+    {
+      "symbol": "META",
+      "market": "stock",
+      "level": 628.0,
+      "direction": "above",
+      "note": "ver largo"
     }
   ],
   "rsi_alerts": [],
