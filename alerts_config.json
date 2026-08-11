@@ -60,6 +60,13 @@
       "level": 628.0,
       "direction": "above",
       "note": "ver largo"
+    },
+    {
+      "symbol": "ORCL",
+      "market": "stock",
+      "level": 137.0,
+      "direction": "below",
+      "note": "ver long"
     }
   ],
   "rsi_alerts": [],
