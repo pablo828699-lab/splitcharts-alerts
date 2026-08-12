@@ -95,6 +95,13 @@
       "level": 129.5,
       "direction": "below",
       "note": "short a 119"
+    },
+    {
+      "symbol": "NBIS",
+      "market": "stock",
+      "level": 231.0,
+      "direction": "below",
+      "note": "ver soporte y long a 260"
     }
   ],
   "rsi_alerts": [
