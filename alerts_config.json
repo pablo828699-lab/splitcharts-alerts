@@ -105,6 +105,14 @@
       "period": 14,
       "overbought": 70.0,
       "oversold": 30.0
+    },
+    {
+      "symbol": "NBIS",
+      "market": "stock",
+      "interval": "4h",
+      "period": 14,
+      "overbought": 70.0,
+      "oversold": 50.0
     }
   ],
   "_ayuda": {
