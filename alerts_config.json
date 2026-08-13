@@ -102,6 +102,13 @@
       "level": 231.0,
       "direction": "below",
       "note": "ver soporte y long a 260"
+    },
+    {
+      "symbol": "IREN",
+      "market": "stock",
+      "level": 46.0,
+      "direction": "above",
+      "note": "long"
     }
   ],
   "rsi_alerts": [
