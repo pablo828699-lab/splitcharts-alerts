@@ -109,6 +109,13 @@
       "level": 46.0,
       "direction": "above",
       "note": "long"
+    },
+    {
+      "symbol": "AMD",
+      "market": "stock",
+      "level": 512.0,
+      "direction": "above",
+      "note": "long a 539"
     }
   ],
   "rsi_alerts": [
