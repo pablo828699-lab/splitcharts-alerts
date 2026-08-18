@@ -15,16 +15,9 @@
     {
       "symbol": "NFLX",
       "market": "stock",
-      "level": 78.3,
+      "level": 83.0,
       "direction": "above",
-      "note": "abrir long"
-    },
-    {
-      "symbol": "NATGAS",
-      "market": "stock",
-      "level": 2.8,
-      "direction": "above",
-      "note": "ver long"
+      "note": "cerrar"
     },
     {
       "symbol": "TSLA",
@@ -43,9 +36,9 @@
     {
       "symbol": "SILVER",
       "market": "stock",
-      "level": 66.7,
-      "direction": "above",
-      "note": "long a 73"
+      "level": 62.44,
+      "direction": "below",
+      "note": "ver long a 73"
     },
     {
       "symbol": "COIN",
