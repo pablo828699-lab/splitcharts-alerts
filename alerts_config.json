@@ -71,8 +71,8 @@
     {
       "symbol": "URA",
       "market": "stock",
-      "level": 44.0,
-      "direction": "below",
+      "level": 46.0,
+      "direction": "above",
       "note": "ver entrada"
     },
     {
@@ -97,9 +97,9 @@
       "note": "ver soporte y long a 260"
     },
     {
-      "symbol": "IREN",
+      "symbol": "KEEL",
       "market": "stock",
-      "level": 46.0,
+      "level": 4.0,
       "direction": "above",
       "note": "long"
     },
