@@ -141,6 +141,14 @@
       "period": 14,
       "overbought": 70.0,
       "oversold": 50.0
+    },
+    {
+      "symbol": "BTCUSDT",
+      "market": "crypto",
+      "interval": "1h",
+      "period": 14,
+      "overbought": 61.0,
+      "oversold": 50.0
     }
   ],
   "_ayuda": {
