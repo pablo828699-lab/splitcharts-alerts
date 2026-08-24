@@ -109,6 +109,20 @@
       "level": 512.0,
       "direction": "above",
       "note": "long a 539"
+    },
+    {
+      "symbol": "INTC",
+      "market": "stock",
+      "level": 85.8455,
+      "direction": "below",
+      "note": "cerrar"
+    },
+    {
+      "symbol": "RIOT",
+      "market": "stock",
+      "level": 21.5324,
+      "direction": "above",
+      "note": "entar"
     }
   ],
   "rsi_alerts": [
