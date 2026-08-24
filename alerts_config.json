@@ -123,6 +123,41 @@
       "level": 21.5324,
       "direction": "above",
       "note": "entar"
+    },
+    {
+      "symbol": "META",
+      "market": "stock",
+      "level": 562.0,
+      "direction": "above",
+      "note": "581"
+    },
+    {
+      "symbol": "META",
+      "market": "stock",
+      "level": 556.33,
+      "direction": "below",
+      "note": "581"
+    },
+    {
+      "symbol": "SNDK",
+      "market": "stock",
+      "level": 1541.32,
+      "direction": "above",
+      "note": "1650"
+    },
+    {
+      "symbol": "SOLUSDT",
+      "market": "crypto",
+      "level": 98.3742,
+      "direction": "above",
+      "note": "compra"
+    },
+    {
+      "symbol": "BTCUSDT",
+      "market": "crypto",
+      "level": 79182.7,
+      "direction": "above",
+      "note": "compra"
     }
   ],
   "rsi_alerts": [
