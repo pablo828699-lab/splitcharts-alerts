@@ -90,13 +90,6 @@
       "note": "short a 119"
     },
     {
-      "symbol": "NBIS",
-      "market": "stock",
-      "level": 231.0,
-      "direction": "below",
-      "note": "ver soporte y long a 260"
-    },
-    {
       "symbol": "KEEL",
       "market": "stock",
       "level": 4.0,
@@ -158,6 +151,34 @@
       "level": 79182.7,
       "direction": "above",
       "note": "compra"
+    },
+    {
+      "symbol": "NBIS",
+      "market": "stock",
+      "level": 223.56,
+      "direction": "above",
+      "note": "compra"
+    },
+    {
+      "symbol": "URA",
+      "market": "stock",
+      "level": 48.0934,
+      "direction": "above",
+      "note": "compra"
+    },
+    {
+      "symbol": "SILVER",
+      "market": "stock",
+      "level": 68.0075,
+      "direction": "above",
+      "note": "ver short"
+    },
+    {
+      "symbol": "SILVER",
+      "market": "stock",
+      "level": 66.9532,
+      "direction": "below",
+      "note": "ver short"
     }
   ],
   "rsi_alerts": [
