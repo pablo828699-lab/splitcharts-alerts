@@ -179,6 +179,27 @@
       "level": 66.9532,
       "direction": "below",
       "note": "ver short"
+    },
+    {
+      "symbol": "IBM",
+      "market": "stock",
+      "level": 243.98,
+      "direction": "above",
+      "note": "largo"
+    },
+    {
+      "symbol": "MRVL",
+      "market": "stock",
+      "level": 259.66,
+      "direction": "above",
+      "note": "ver long a x"
+    },
+    {
+      "symbol": "MRVL",
+      "market": "stock",
+      "level": 259.66,
+      "direction": "below",
+      "note": "ver long a x"
     }
   ],
   "rsi_alerts": [
