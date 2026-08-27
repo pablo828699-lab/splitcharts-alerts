@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Consola de Ciclo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* ---- tokens: claro por defecto ---- */
+:root{
+  --ground:#f7f6f3; --surface:#fffefc; --surface-2:#f1efe9;
+  --line:#e0dcd2; --line-soft:#ece9e1;
+  --ink:#1a1f28; --ink-2:#4a5361; --muted:#79808d;
+  --accent:#b07d1e; --accent-soft:#f0e3c6;
+  --pos:#2e8b62; --neg:#c0453f; --wait:#3f6fa8; --sleep:#9aa1ad;
+  --shadow:0 1px 2px rgba(26,31,40,.05),0 8px 24px -12px rgba(26,31,40,.12);
+  --r:10px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#0e1420; --surface:#161e2c; --surface-2:#1c2637;
+    --line:#263143; --line-soft:#1f2938;
+    --ink:#e8ecf3; --ink-2:#b3becd; --muted:#7d8ba0;
+    --accent:#d9a441; --accent-soft:#3a2f18;
+    --pos:#3fb27f; --neg:#e0625c; --wait:#5b8dd9; --sleep:#5c6779;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.5);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0e1420; --surface:#161e2c; --surface-2:#1c2637;
+  --line:#263143; --line-soft:#1f2938;
+  --ink:#e8ecf3; --ink-2:#b3becd; --muted:#7d8ba0;
+  --accent:#d9a441; --accent-soft:#3a2f18;
+  --pos:#3fb27f; --neg:#e0625c; --wait:#5b8dd9; --sleep:#5c6779;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.5);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"IBM Plex Sans",system-ui,-apple-system,Segoe UI,sans-serif;
+  font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 72px}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:600;text-wrap:balance;margin:0}
+.num{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.eyebrow{
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);font-weight:600
+}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+
+/* ---- encabezado ---- */
+header{
+  border-bottom:1px solid var(--line); background:var(--surface);
+  position:sticky; top:0; z-index:20
+}
+.hbar{
+  max-width:1080px;margin:0 auto;padding:14px 20px;
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 26px
+}
+.hbar h1{font-size:20px;letter-spacing:-.01em}
+.hbar .sub{color:var(--muted);font-size:12.5px}
+.hstat{margin-left:auto;display:flex;gap:24px;flex-wrap:wrap}
+.hstat div{text-align:right}
+.hstat .v{font-size:16px;font-weight:600}
+.hstat .k{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+
+section{margin-top:40px}
+.shead{display:flex;align-items:baseline;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.shead h2{font-size:17px}
+.shead p{margin:0;color:var(--muted);font-size:13px}
+
+/* ---- barra de progreso del ciclo ---- */
+.cyclebar{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  padding:16px 18px;box-shadow:var(--shadow)
+}
+.track{
+  position:relative;height:6px;background:var(--surface-2);
+  border-radius:99px;margin:16px 0 8px;overflow:hidden
+}
+.track .fill{position:absolute;inset:0 auto 0 0;background:var(--accent);border-radius:99px}
+.ticks{display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted)}
+
+/* ---- tarjetas de activo ---- */
+.grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.acard{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  padding:14px 16px;box-shadow:var(--shadow)
+}
+.acard .top{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.acard .sym{font-weight:600;font-size:14px;letter-spacing:.02em}
+.acard .px{font-size:22px;font-weight:600;margin:4px 0 10px;letter-spacing:-.02em}
+.acard .rows{display:flex;flex-direction:column;gap:5px;font-size:12.5px}
+.acard .rows div{display:flex;justify-content:space-between;gap:10px}
+.acard .rows span:first-child{color:var(--muted)}
+.pos{color:var(--pos)} .neg{color:var(--neg)}
+
+/* ---- mapa de capital ---- */
+.allocbar{
+  display:flex;height:38px;border-radius:8px;overflow:hidden;
+  border:1px solid var(--line);margin-bottom:14px
+}
+.allocbar span{
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:600;color:#0e1420;
+  font-family:"IBM Plex Mono",monospace
+}
+.slist{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.scard{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  padding:14px 16px;box-shadow:var(--shadow);
+  border-top:3px solid var(--c,var(--accent))
+}
+.scard .st{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.scard .sn{font-weight:600;font-size:13.5px}
+.scard .sv{font-size:17px;font-weight:600}
+.scard .tesis{font-size:12.5px;color:var(--ink-2);margin:8px 0 0}
+.scard .rd{
+  font-size:12px;color:var(--muted);margin-top:10px;padding-top:9px;
+  border-top:1px dashed var(--line)
+}
+.scard .rd b{color:var(--ink-2);font-weight:600}
+
+/* ---- rieles de escalones ---- */
+.rails{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.rail{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  padding:16px 18px 12px;box-shadow:var(--shadow)
+}
+.rail .rh{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:4px}
+.rail .rh .sym{font-weight:600}
+.rail .rh .px{font-size:15px;font-weight:600}
+.rail .rsub{font-size:11.5px;color:var(--muted);margin-bottom:14px}
+.rung{
+  display:grid;grid-template-columns:78px 1fr 62px;align-items:center;
+  gap:10px;padding:7px 0;border-top:1px solid var(--line-soft)
+}
+.rung .lvl{font-size:13px;font-weight:600;text-align:right}
+.rung .meter{position:relative;height:16px}
+.rung .meter i{
+  position:absolute;left:0;top:3px;height:10px;border-radius:3px;
+  background:var(--wait);opacity:.85;display:block
+}
+.rung.tocado .meter i{background:var(--pos)}
+.rung.durmiente .meter i{background:var(--sleep);opacity:.5}
+.rung .amt{font-size:12px;text-align:right;color:var(--ink-2)}
+.rung .tag{
+  grid-column:1/-1;font-size:11.5px;color:var(--muted);
+  margin:-3px 0 1px;padding-left:88px
+}
+.chip{
+  display:inline-block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  font-weight:600;padding:1px 6px;border-radius:99px;vertical-align:1px
+}
+.chip.cargado{background:var(--accent-soft);color:var(--accent)}
+.chip.tocado{background:var(--pos);color:var(--surface)}
+
+/* ---- tablas ---- */
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);box-shadow:var(--shadow)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:460px}
+th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line-soft)}
+th{
+  font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);font-weight:600;background:var(--surface-2)
+}
+tr:last-child td{border-bottom:none}
+td.r,th.r{text-align:right}
+
+/* ---- billeteras ---- */
+.wgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.wcard{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  padding:14px 16px;box-shadow:var(--shadow)
+}
+.wcard .wt{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:2px}
+.wcard .wn{font-weight:600;font-size:13.5px}
+.wcard .wk{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.wcard .wg{font-size:12.5px;color:var(--ink-2);margin:6px 0 0}
+.wcard .wr{font-size:12px;color:var(--muted);margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+
+.note{
+  font-size:12.5px;color:var(--muted);margin-top:32px;padding-top:16px;
+  border-top:1px solid var(--line);max-width:70ch
+}
+@media (max-width:560px){
+  .hstat{margin-left:0;width:100%;justify-content:space-between;gap:14px}
+  .rung{grid-template-columns:66px 1fr 54px}
+  .rung .tag{padding-left:76px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hbar">
+    <div>
+      <h1>Consola de Ciclo</h1>
+      <div class="sub">Cartera 300k · ventana pre-halving</div>
+    </div>
+    <div class="hstat">
+      <div><div class="k">BTC</div><div class="v num" id="h-btc">—</div></div>
+      <div><div class="k">Al halving</div><div class="v num" id="h-halv">—</div></div>
+      <div><div class="k">Munición seca</div><div class="v num" id="h-dry">—</div></div>
+      <div><div class="k">Actualizado</div><div class="v num" id="h-upd" style="font-size:13px">—</div></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section>
+    <div class="cyclebar">
+      <div class="eyebrow">Posición en el ciclo del halving</div>
+      <div class="track"><div class="fill" id="cyc-fill" style="width:0%"></div></div>
+      <div class="ticks">
+        <span id="cyc-a">—</span>
+        <span id="cyc-mid" style="color:var(--accent);font-weight:600">—</span>
+        <span id="cyc-b">—</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="shead">
+      <h2>Dónde está cada activo</h2>
+      <p>Contra el máximo del ciclo y contra el mínimo de junio 2026.</p>
+    </div>
+    <div class="grid4" id="assets"></div>
+  </section>
+
+  <section>
+    <div class="shead">
+      <h2>Mapa de capital</h2>
+      <p>Los 300k repartidos por función. El núcleo no se toca.</p>
+    </div>
+    <div class="allocbar" id="allocbar"></div>
+    <div class="slist" id="sleeves"></div>
+  </section>
+
+  <section>
+    <div class="shead">
+      <h2>Escalones cargados</h2>
+      <p>La barra se llena a medida que el precio se acerca al peldaño.</p>
+    </div>
+    <div class="rails" id="rails"></div>
+  </section>
+
+  <section>
+    <div class="shead">
+      <h2>Salida escalonada</h2>
+      <p>Definida ahora, cuando no hay euforia que la discuta.</p>
+    </div>
+    <div class="tw"><table>
+      <thead><tr><th>BTC en</th><th class="r">Falta</th><th>Acción</th></tr></thead>
+      <tbody id="tp"></tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <div class="shead">
+      <h2>Billeteras</h2>
+      <p>Separadas por lo que pueden firmar, no por lo que guardan.</p>
+    </div>
+    <div class="wgrid" id="wallets"></div>
+  </section>
+
+  <p class="note" id="note"></p>
+</div>
+
+<script>
+const FALLBACK = /*DATA:START*/{"generado":"2026-08-27T14:11:02Z","meta":{"nombre":"Cartera 300k — ciclo pre-halving","capital_total_usd":300000,"moneda":"USD","creado":"2026-08-27","horizonte":"hasta el pico post-halving estimado (2028-2029)","objetivo":"máxima rentabilidad ajustada por supervivencia; sin tramo de renta conservadora (hay liquidez fuera de esta cartera)"},"cycle":{"assets":[{"symbol":"BTCUSDT","asset":"BTC","price":79310.0,"rsi_1d":null,"ath":126287,"ath_fecha":"2025-10","min_ciclo":57739,"min_fecha":"2026-06","desde_ath_pct":-37.2,"desde_min_pct":37.4},{"symbol":"ETHUSDT","asset":"ETH","price":2493.0,"rsi_1d":null,"ath":4956,"ath_fecha":"2025-08","min_ciclo":1505,"min_fecha":"2026-06","desde_ath_pct":-49.7,"desde_min_pct":65.6},{"symbol":"SOLUSDT","asset":"SOL","price":105.14,"rsi_1d":null,"ath":295,"ath_fecha":"2025-01","min_ciclo":60.1,"min_fecha":"2026-06","desde_ath_pct":-64.4,"desde_min_pct":74.9},{"symbol":"BNBUSDT","asset":"BNB","price":707.55,"rsi_1d":null,"ath":1375,"ath_fecha":"2025-10","min_ciclo":537,"min_fecha":"2026-06","desde_ath_pct":-48.5,"desde_min_pct":31.8}],"last_halving":"2024-04-20","next_halving":"2028-04-15","dias_al_halving":596,"dias_desde_halving":859,"pct_del_ciclo":59.0},"capital":{"core":{"id":"nucleo","label":"Núcleo BTC largo plazo","usd":100000,"asset":"BTCUSDT","wallet":"cold-btc","regla":"No se toca. No se tradea. No se presta. No firma contratos. Se revisa 2 veces por año.","salida":"Venta escalonada solo en zona de euforia post-halving (ver rules.take_profit)"},"sleeves":[{"id":"dca","label":"DCA calendario","usd":60000,"color":"#4ade80","tesis":"Anti-timing. Compra fija cada quincena pase lo que pase. Es el único tramo que garantiza participar si el mínimo de junio-2026 ya fue EL mínimo.","regla_dura":"Nunca se saltea una compra por «está caro» ni se duplica por «está barato». Los dips los compra el tramo de escalones, no éste.","ejecucion":"24 compras quincenales de 2.500 USD durante 12 meses"},{"id":"escalones","label":"Escalones de precio (ladder)","usd":55000,"color":"#38bdf8","tesis":"Munición para caídas, con órdenes límite cargadas de antemano. Tamaño creciente hacia abajo: cuanto más duele, más se compra.","regla_dura":"Las órdenes viven en el exchange, no en la cabeza. Si no está cargada, no existe.","ejecucion":"Órdenes límite permanentes en el exchange. Se reponen al ejecutarse.","activado_usd":0,"pendiente_usd":55000},{"id":"beta","label":"Beta / rotación","usd":55000,"color":"#a78bfa","tesis":"El tramo que realmente busca el múltiplo del ciclo. Posiciones concentradas con tesis, revisadas cada trimestre.","regla_dura":"Máximo 8 posiciones. Ninguna supera el 20% del tramo. Corte en −40% por posición, sin excepción ni promediar a la baja.","ejecucion":"3 tramos: 40% ahora, 30% si BTC confirma sobre 88k semanal, 30% oportunista"},{"id":"discrecional","label":"Oportunidades discrecional","usd":30000,"color":"#fb923c","tesis":"Donde se expresan los swings, las narrativas y lo que levante el escáner. Dimensionado para que perderlo entero cueste 10% de la cartera.","regla_dura":"Stop −15% por operación. Si el tramo cae bajo 21.000 USD (−30%) se apaga y no opera por un trimestre.","ejecucion":"Máximo 5 posiciones simultáneas, hasta 6.000 USD cada una"}],"total":300000,"en_riesgo_pct":28.3},"ladders":{"BTCUSDT":[{"price":72000.0,"usd":5000,"tag":"retroceso 50% del rally de agosto","dist_pct":-9.2,"touched_at":null,"status":"cargado"},{"price":66000.0,"usd":6000,"tag":"vuelta al rango de consolidación jul-ago","dist_pct":-16.8,"touched_at":null,"status":"cargado"},{"price":60000.0,"usd":7000,"tag":"retest de la zona del mínimo de ciclo","dist_pct":-24.3,"touched_at":null,"status":"cargado"},{"price":54000.0,"usd":7000,"tag":"quiebre bajo el mínimo de junio-2026","dist_pct":-31.9,"touched_at":null,"status":"cargado"},{"price":46000.0,"usd":5000,"tag":"capitulación — solo si la tesis de ciclo sigue viva","dist_pct":-42.0,"touched_at":null,"status":"cargado"}],"ETHUSDT":[{"price":2200.0,"usd":3000,"tag":"primer retroceso","dist_pct":-11.8,"touched_at":null,"status":"cargado"},{"price":1900.0,"usd":4000,"tag":"media del rango feb-may","dist_pct":-23.8,"touched_at":null,"status":"cargado"},{"price":1650.0,"usd":4000,"tag":"zona de acumulación","dist_pct":-33.8,"touched_at":null,"status":"cargado"},{"price":1400.0,"usd":4000,"tag":"bajo el mínimo de ciclo","dist_pct":-43.8,"touched_at":null,"status":"cargado"}],"SOLUSDT":[{"price":92.0,"usd":2000,"tag":"primer retroceso","dist_pct":-12.5,"touched_at":null,"status":"cargado"},{"price":80.0,"usd":3000,"tag":"rango mar-may","dist_pct":-23.9,"touched_at":null,"status":"cargado"},{"price":68.0,"usd":3000,"tag":"zona del mínimo","dist_pct":-35.3,"touched_at":null,"status":"cargado"},{"price":55.0,"usd":2000,"tag":"bajo el mínimo de ciclo","dist_pct":-47.7,"touched_at":null,"status":"durmiente"}]},"dca":{"id":"dca","label":"DCA calendario","usd":60000,"color":"#4ade80","tesis":"Anti-timing. Compra fija cada quincena pase lo que pase. Es el único tramo que garantiza participar si el mínimo de junio-2026 ya fue EL mínimo.","ejecucion":"24 compras quincenales de 2.500 USD durante 12 meses","split":{"BTCUSDT":0.4,"ETHUSDT":0.35,"SOLUSDT":0.25},"destino":"cold-btc / cold-alt","regla_dura":"Nunca se saltea una compra por «está caro» ni se duplica por «está barato». Los dips los compra el tramo de escalones, no éste."},"dca_split":{"BTCUSDT":0.4,"ETHUSDT":0.35,"SOLUSDT":0.25},"take_profit":[{"trigger_btc":150000.0,"accion":"vender 10% de lo acumulado por DCA+escalones (no el núcleo)","dist_pct":89.1,"fired_at":null},{"trigger_btc":200000.0,"accion":"vender otro 20% acumulado + 25% del tramo beta","dist_pct":152.2,"fired_at":null},{"trigger_btc":260000.0,"accion":"vender otro 30% acumulado + 50% del tramo beta","dist_pct":227.8,"fired_at":null},{"trigger_btc":320000.0,"accion":"revisar salida del núcleo por primera vez","dist_pct":303.5,"fired_at":null}],"invalidacion":{"floor":46000.0,"active":false,"texto":"Si BTC cierra un mes bajo 46.000, se pausan los tramos beta y discrecional; DCA y escalones siguen (son justamente para eso)."},"wallets":[{"id":"cold-btc","label":"Fría BTC (núcleo)","tipo":"hardware","chains":["bitcoin"],"guarda":"Núcleo 100k + todo el BTC que gradúa a largo plazo","regla":"Nunca firma un contrato. Nunca se conecta a una dApp. Semilla en metal, passphrase aparte. Firma 2 veces por año."},{"id":"cold-alt","label":"Fría alts (núcleo)","tipo":"hardware","chains":["ethereum","solana","bsc"],"guarda":"ETH / SOL / BNB de largo plazo comprados por DCA y escalones","regla":"Dispositivo distinto (o cuenta distinta) del de BTC. Sólo recibe y manda a exchange propio. No firma approvals."},{"id":"hot-evm","label":"Caliente EVM","tipo":"software","chains":["ethereum","base","arbitrum","bsc"],"guarda":"Sólo el capital de beta y discrecional que esté operando en EVM","regla":"Es la billetera que asumís que se puede vaciar. Revocar approvals cada mes. Nunca tiene más de lo que estás dispuesto a perder."},{"id":"hot-sol","label":"Caliente Solana","tipo":"software","chains":["solana"],"guarda":"Beta y discrecional en Solana","regla":"Misma lógica que hot-evm, separada por cadena para que un contrato malicioso no alcance las dos."},{"id":"exchange","label":"Exchange (CEX)","tipo":"custodia de terceros","chains":[],"guarda":"Stablecoins del DCA y de los escalones + órdenes límite cargadas","regla":"Es un lugar de ejecución, no de custodia. Lo ejecutado se barre a frío según rules.sweep. 2FA por app, retiros con whitelist."}],"rules":{"sweep":"Todo lo comprado por DCA o escalones sale del exchange a billetera fría dentro de los 7 días.","rebalanceo":"Trimestral. Sólo entre tramos, nunca tocando el núcleo.","take_profit":[{"trigger_btc":150000,"accion":"vender 10% de lo acumulado por DCA+escalones (no el núcleo)"},{"trigger_btc":200000,"accion":"vender otro 20% acumulado + 25% del tramo beta"},{"trigger_btc":260000,"accion":"vender otro 30% acumulado + 50% del tramo beta"},{"trigger_btc":320000,"accion":"revisar salida del núcleo por primera vez"}],"invalidacion":"Si BTC cierra un mes bajo 46.000, se pausan los tramos beta y discrecional; DCA y escalones siguen (son justamente para eso)."},"alertas_esta_corrida":0,"errores":[]}/*DATA:END*/;
+const fmt = (n,d) => n==null ? "—" : n.toLocaleString("es-AR",{minimumFractionDigits:d??0,maximumFractionDigits:d??0});
+const usd = n => "$" + fmt(n);
+const pc  = n => (n>0?"+":"") + n.toFixed(1) + "%";
+const dec = p => p >= 1000 ? 0 : p >= 10 ? 2 : 3;
+
+function render(d){
+  // encabezado
+  const btc = d.cycle.assets.find(a=>a.symbol==="BTCUSDT");
+  if(btc) document.getElementById("h-btc").textContent = usd(btc.price);
+  document.getElementById("h-halv").textContent = d.cycle.dias_al_halving + " d";
+  const esc = d.capital.sleeves.find(s=>s.id==="escalones");
+  const dry = (d.capital.sleeves.find(s=>s.id==="dca")?.usd||0) + (esc?.pendiente_usd ?? esc?.usd ?? 0);
+  document.getElementById("h-dry").textContent = usd(dry);
+  document.getElementById("h-upd").textContent =
+    new Date(d.generado).toLocaleString("es-AR",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"});
+
+  // ciclo
+  document.getElementById("cyc-fill").style.width = d.cycle.pct_del_ciclo + "%";
+  document.getElementById("cyc-a").textContent = "Halving " + d.cycle.last_halving.slice(0,7);
+  document.getElementById("cyc-mid").textContent = "hoy · " + d.cycle.pct_del_ciclo + "% recorrido";
+  document.getElementById("cyc-b").textContent = "Halving " + d.cycle.next_halving.slice(0,7);
+
+  // activos
+  document.getElementById("assets").innerHTML = d.cycle.assets.map(a=>`
+    <div class="acard">
+      <div class="top">
+        <span class="sym">${a.asset}</span>
+        ${a.rsi_1d!=null?`<span class="num" style="font-size:11.5px;color:var(--muted)">RSI ${a.rsi_1d}</span>`:""}
+      </div>
+      <div class="px num">${usd(a.price)}</div>
+      <div class="rows num">
+        <div><span>desde ATH</span><span class="${a.desde_ath_pct<0?"neg":"pos"}">${pc(a.desde_ath_pct)}</span></div>
+        <div><span>desde mínimo</span><span class="${a.desde_min_pct<0?"neg":"pos"}">${pc(a.desde_min_pct)}</span></div>
+        <div><span>ATH ${a.ath_fecha}</span><span>${usd(a.ath)}</span></div>
+      </div>
+    </div>`).join("");
+
+  // capital
+  const all = [{label:d.capital.core.label,usd:d.capital.core.usd,color:"#8b8578"},
+               ...d.capital.sleeves.map(s=>({label:s.label,usd:s.usd,color:s.color}))];
+  const tot = d.capital.total;
+  document.getElementById("allocbar").innerHTML = all.map(s=>{
+    const w = s.usd/tot*100;
+    return `<span style="width:${w}%;background:${s.color}" title="${s.label} · ${usd(s.usd)}">${w>9?Math.round(w)+"%":""}</span>`;
+  }).join("");
+
+  document.getElementById("sleeves").innerHTML = [
+    `<div class="scard" style="--c:#8b8578">
+       <div class="st"><span class="sn">${d.capital.core.label}</span><span class="sv num">${usd(d.capital.core.usd)}</span></div>
+       <p class="tesis">${d.capital.core.salida}</p>
+       <div class="rd"><b>Regla:</b> ${d.capital.core.regla}</div>
+     </div>`,
+    ...d.capital.sleeves.map(s=>`
+     <div class="scard" style="--c:${s.color}">
+       <div class="st"><span class="sn">${s.label}</span><span class="sv num">${usd(s.usd)}</span></div>
+       <p class="tesis">${s.tesis}</p>
+       ${s.pendiente_usd!=null?`<div class="rd"><b>${usd(s.activado_usd)}</b> activado · <b>${usd(s.pendiente_usd)}</b> esperando</div>`:""}
+       <div class="rd"><b>Regla dura:</b> ${s.regla_dura}</div>
+     </div>`)].join("");
+
+  // rieles
+  document.getElementById("rails").innerHTML = Object.entries(d.ladders).map(([sym,rows])=>{
+    const a = d.cycle.assets.find(x=>x.symbol===sym) || {};
+    const px = a.price||0;
+    const maxd = Math.max(...rows.map(r=>Math.abs(r.dist_pct)),1);
+    const total = rows.reduce((t,r)=>t+r.usd,0);
+    return `<div class="rail">
+      <div class="rh"><span class="sym">${sym.replace("USDT","")}</span><span class="px num">${usd(px)}</span></div>
+      <div class="rsub">${usd(total)} repartidos en ${rows.length} peldaños</div>
+      ${rows.map(r=>`
+        <div class="rung ${r.status}">
+          <span class="lvl num">${fmt(r.price,dec(r.price))}</span>
+          <span class="meter"><i style="width:${r.touched_at?100:Math.max(4,(1-Math.abs(r.dist_pct)/maxd)*100)}%"></i></span>
+          <span class="amt num">${usd(r.usd)}</span>
+          <span class="tag">${r.dist_pct.toFixed(1)}% · ${r.tag} <span class="chip ${r.status}">${r.status}</span></span>
+        </div>`).join("")}
+    </div>`;
+  }).join("");
+
+  // salida
+  document.getElementById("tp").innerHTML = d.take_profit.map(t=>`
+    <tr><td class="num">${usd(t.trigger_btc)}</td>
+        <td class="r num pos">${pc(t.dist_pct)}</td>
+        <td>${t.accion}</td></tr>`).join("");
+
+  // billeteras
+  document.getElementById("wallets").innerHTML = d.wallets.map(w=>`
+    <div class="wcard">
+      <div class="wt"><span class="wn">${w.label}</span><span class="wk">${w.tipo}</span></div>
+      <p class="wg">${w.guarda}</p>
+      <div class="wr">${w.regla}</div>
+    </div>`).join("");
+
+  document.getElementById("note").textContent =
+    "Regla de barrido: " + d.rules.sweep + " — Invalidación: " + d.rules.invalidacion +
+    (d.errores && d.errores.length ? "  ⚠ " + d.errores.join("; ") : "");
+}
+
+fetch("./data.json",{cache:"no-store"})
+  .then(r=>{ if(!r.ok) throw new Error(r.status); return r.json(); })
+  .then(render)
+  .catch(()=>{ if(FALLBACK) render(FALLBACK); });
+</script>
+</body>
+</html>

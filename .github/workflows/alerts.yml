@@ -38,15 +38,33 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python telegram_alerts.py --once
 
+      # Escalones de la cartera + regeneracion del tablero que publica Netlify.
+      # continue-on-error: un fallo aca no debe tumbar las alertas de precio.
+      - name: Run portfolio monitor
+        continue-on-error: true
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          python portfolio_monitor.py --once
+          python build_dashboard.py
+
       - name: Persist state
         run: |
-          if [ -z "$(git status --porcelain alerts_state.json)" ]; then
+          # Solo los que existan: si el monitor de cartera fallo, su estado
+          # puede no estar, y un git add sobre un path inexistente aborta el
+          # paso y se perderia tambien el guardado de alerts_state.json.
+          FILES=""
+          for f in alerts_state.json portfolio_state.json docs/data.json docs/index.html; do
+            if [ -f "$f" ]; then FILES="$FILES $f"; fi
+          done
+          if [ -z "$FILES" ] || [ -z "$(git status --porcelain -- $FILES)" ]; then
             echo "sin cambios de estado"; exit 0
           fi
           git config user.name "splitcharts-alerts-bot"
           git config user.email "alerts-bot@users.noreply.github.com"
-          git add alerts_state.json
-          git commit -m "update alert state [skip ci]"
+          git add -- $FILES
+          git commit -m "update alert state + dashboard [skip ci]"
           # Reintentar contra carreras: traer lo último (conservando nuestro
           # estado en conflicto) y empujar. Nunca falla la corrida por esto.
           for i in 1 2 3 4 5; do

@@ -1,0 +1,18 @@
+# Netlify sirve el tablero como sitio estatico. No hay build: los datos los
+# genera GitHub Actions (portfolio_monitor.py) y se commitean en docs/data.json,
+# asi que cada push del bot redespliega el sitio ya actualizado.
+[build]
+  publish = "docs"
+  command = ""
+
+# data.json cambia cada 5 minutos: nunca cachearlo, o el tablero muestra
+# precios viejos aunque el deploy este al dia.
+[[headers]]
+  for = "/data.json"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "no-cache"

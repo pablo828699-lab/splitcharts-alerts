@@ -1,0 +1,267 @@
+{
+  "_doc": "Estrategia de cartera como DATOS. Este archivo es la fuente de verdad: portfolio_monitor.py lo lee, evalúa el mercado contra él, dispara Telegram y genera docs/data.json para el tablero. Editar acá cambia la estrategia y el tablero, sin tocar código.",
+  "meta": {
+    "nombre": "Cartera 300k — ciclo pre-halving",
+    "capital_total_usd": 300000,
+    "moneda": "USD",
+    "creado": "2026-08-27",
+    "horizonte": "hasta el pico post-halving estimado (2028-2029)",
+    "objetivo": "máxima rentabilidad ajustada por supervivencia; sin tramo de renta conservadora (hay liquidez fuera de esta cartera)"
+  },
+  "cycle": {
+    "last_halving": "2024-04-20",
+    "next_halving_est": "2028-04-15",
+    "_nota": "Referencias de ciclo medidas el 2026-08-27 con el índice CoinDesk (ccix). El mínimo de ciclo de junio-2026 es el ancla de los escalones.",
+    "refs": {
+      "BTCUSDT": {
+        "ath": 126287,
+        "ath_fecha": "2025-10",
+        "min_ciclo": 57739,
+        "min_fecha": "2026-06"
+      },
+      "ETHUSDT": {
+        "ath": 4956,
+        "ath_fecha": "2025-08",
+        "min_ciclo": 1505,
+        "min_fecha": "2026-06"
+      },
+      "SOLUSDT": {
+        "ath": 295,
+        "ath_fecha": "2025-01",
+        "min_ciclo": 60.1,
+        "min_fecha": "2026-06"
+      },
+      "BNBUSDT": {
+        "ath": 1375,
+        "ath_fecha": "2025-10",
+        "min_ciclo": 537,
+        "min_fecha": "2026-06"
+      }
+    }
+  },
+  "core": {
+    "id": "nucleo",
+    "label": "Núcleo BTC largo plazo",
+    "usd": 100000,
+    "asset": "BTCUSDT",
+    "wallet": "cold-btc",
+    "regla": "No se toca. No se tradea. No se presta. No firma contratos. Se revisa 2 veces por año.",
+    "salida": "Venta escalonada solo en zona de euforia post-halving (ver rules.take_profit)"
+  },
+  "sleeves": [
+    {
+      "id": "dca",
+      "label": "DCA calendario",
+      "usd": 60000,
+      "color": "#4ade80",
+      "tesis": "Anti-timing. Compra fija cada quincena pase lo que pase. Es el único tramo que garantiza participar si el mínimo de junio-2026 ya fue EL mínimo.",
+      "ejecucion": "24 compras quincenales de 2.500 USD durante 12 meses",
+      "split": {
+        "BTCUSDT": 0.4,
+        "ETHUSDT": 0.35,
+        "SOLUSDT": 0.25
+      },
+      "destino": "cold-btc / cold-alt",
+      "regla_dura": "Nunca se saltea una compra por «está caro» ni se duplica por «está barato». Los dips los compra el tramo de escalones, no éste."
+    },
+    {
+      "id": "escalones",
+      "label": "Escalones de precio (ladder)",
+      "usd": 55000,
+      "color": "#38bdf8",
+      "tesis": "Munición para caídas, con órdenes límite cargadas de antemano. Tamaño creciente hacia abajo: cuanto más duele, más se compra.",
+      "ejecucion": "Órdenes límite permanentes en el exchange. Se reponen al ejecutarse.",
+      "destino": "cold-btc / cold-alt",
+      "regla_dura": "Las órdenes viven en el exchange, no en la cabeza. Si no está cargada, no existe."
+    },
+    {
+      "id": "beta",
+      "label": "Beta / rotación",
+      "usd": 55000,
+      "color": "#a78bfa",
+      "tesis": "El tramo que realmente busca el múltiplo del ciclo. Posiciones concentradas con tesis, revisadas cada trimestre.",
+      "ejecucion": "3 tramos: 40% ahora, 30% si BTC confirma sobre 88k semanal, 30% oportunista",
+      "buckets": {
+        "L1 mayores fuera del núcleo": 0.4,
+        "Infraestructura / DeFi líder": 0.3,
+        "Narrativa del ciclo (rotativa)": 0.3
+      },
+      "destino": "hot-evm / hot-sol",
+      "regla_dura": "Máximo 8 posiciones. Ninguna supera el 20% del tramo. Corte en −40% por posición, sin excepción ni promediar a la baja."
+    },
+    {
+      "id": "discrecional",
+      "label": "Oportunidades discrecional",
+      "usd": 30000,
+      "color": "#fb923c",
+      "tesis": "Donde se expresan los swings, las narrativas y lo que levante el escáner. Dimensionado para que perderlo entero cueste 10% de la cartera.",
+      "ejecucion": "Máximo 5 posiciones simultáneas, hasta 6.000 USD cada una",
+      "destino": "hot-evm / hot-sol / exchange",
+      "regla_dura": "Stop −15% por operación. Si el tramo cae bajo 21.000 USD (−30%) se apaga y no opera por un trimestre."
+    }
+  ],
+  "ladders": {
+    "BTCUSDT": [
+      {
+        "price": 72000,
+        "usd": 5000,
+        "tag": "retroceso 50% del rally de agosto"
+      },
+      {
+        "price": 66000,
+        "usd": 6000,
+        "tag": "vuelta al rango de consolidación jul-ago"
+      },
+      {
+        "price": 60000,
+        "usd": 7000,
+        "tag": "retest de la zona del mínimo de ciclo"
+      },
+      {
+        "price": 54000,
+        "usd": 7000,
+        "tag": "quiebre bajo el mínimo de junio-2026"
+      },
+      {
+        "price": 46000,
+        "usd": 5000,
+        "tag": "capitulación — solo si la tesis de ciclo sigue viva"
+      }
+    ],
+    "ETHUSDT": [
+      {
+        "price": 2200,
+        "usd": 3000,
+        "tag": "primer retroceso"
+      },
+      {
+        "price": 1900,
+        "usd": 4000,
+        "tag": "media del rango feb-may"
+      },
+      {
+        "price": 1650,
+        "usd": 4000,
+        "tag": "zona de acumulación"
+      },
+      {
+        "price": 1400,
+        "usd": 4000,
+        "tag": "bajo el mínimo de ciclo"
+      }
+    ],
+    "SOLUSDT": [
+      {
+        "price": 92,
+        "usd": 2000,
+        "tag": "primer retroceso"
+      },
+      {
+        "price": 80,
+        "usd": 3000,
+        "tag": "rango mar-may"
+      },
+      {
+        "price": 68,
+        "usd": 3000,
+        "tag": "zona del mínimo"
+      },
+      {
+        "price": 55,
+        "usd": 2000,
+        "tag": "bajo el mínimo de ciclo"
+      }
+    ]
+  },
+  "wallets": [
+    {
+      "id": "cold-btc",
+      "label": "Fría BTC (núcleo)",
+      "tipo": "hardware",
+      "chains": [
+        "bitcoin"
+      ],
+      "guarda": "Núcleo 100k + todo el BTC que gradúa a largo plazo",
+      "regla": "Nunca firma un contrato. Nunca se conecta a una dApp. Semilla en metal, passphrase aparte. Firma 2 veces por año."
+    },
+    {
+      "id": "cold-alt",
+      "label": "Fría alts (núcleo)",
+      "tipo": "hardware",
+      "chains": [
+        "ethereum",
+        "solana",
+        "bsc"
+      ],
+      "guarda": "ETH / SOL / BNB de largo plazo comprados por DCA y escalones",
+      "regla": "Dispositivo distinto (o cuenta distinta) del de BTC. Sólo recibe y manda a exchange propio. No firma approvals."
+    },
+    {
+      "id": "hot-evm",
+      "label": "Caliente EVM",
+      "tipo": "software",
+      "chains": [
+        "ethereum",
+        "base",
+        "arbitrum",
+        "bsc"
+      ],
+      "guarda": "Sólo el capital de beta y discrecional que esté operando en EVM",
+      "regla": "Es la billetera que asumís que se puede vaciar. Revocar approvals cada mes. Nunca tiene más de lo que estás dispuesto a perder."
+    },
+    {
+      "id": "hot-sol",
+      "label": "Caliente Solana",
+      "tipo": "software",
+      "chains": [
+        "solana"
+      ],
+      "guarda": "Beta y discrecional en Solana",
+      "regla": "Misma lógica que hot-evm, separada por cadena para que un contrato malicioso no alcance las dos."
+    },
+    {
+      "id": "exchange",
+      "label": "Exchange (CEX)",
+      "tipo": "custodia de terceros",
+      "chains": [],
+      "guarda": "Stablecoins del DCA y de los escalones + órdenes límite cargadas",
+      "regla": "Es un lugar de ejecución, no de custodia. Lo ejecutado se barre a frío según rules.sweep. 2FA por app, retiros con whitelist."
+    }
+  ],
+  "rules": {
+    "sweep": "Todo lo comprado por DCA o escalones sale del exchange a billetera fría dentro de los 7 días.",
+    "rebalanceo": "Trimestral. Sólo entre tramos, nunca tocando el núcleo.",
+    "take_profit": [
+      {
+        "trigger_btc": 150000,
+        "accion": "vender 10% de lo acumulado por DCA+escalones (no el núcleo)"
+      },
+      {
+        "trigger_btc": 200000,
+        "accion": "vender otro 20% acumulado + 25% del tramo beta"
+      },
+      {
+        "trigger_btc": 260000,
+        "accion": "vender otro 30% acumulado + 50% del tramo beta"
+      },
+      {
+        "trigger_btc": 320000,
+        "accion": "revisar salida del núcleo por primera vez"
+      }
+    ],
+    "invalidacion": "Si BTC cierra un mes bajo 46.000, se pausan los tramos beta y discrecional; DCA y escalones siguen (son justamente para eso)."
+  },
+  "alerts": {
+    "ladder_touch": true,
+    "take_profit": true,
+    "invalidacion": true,
+    "resumen_semanal": true,
+    "rsi_extremos": {
+      "activo": true,
+      "interval": "1d",
+      "period": 14,
+      "sobreventa": 30,
+      "sobrecompra": 75
+    }
+  }
+}
