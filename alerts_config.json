@@ -200,6 +200,13 @@
       "level": 259.66,
       "direction": "below",
       "note": "ver long a x"
+    },
+    {
+      "symbol": "NFLX",
+      "market": "stock",
+      "level": 80.35,
+      "direction": "above",
+      "note": "long y ver rsi mas de 50 en 1 hs"
     }
   ],
   "rsi_alerts": [
@@ -226,6 +233,14 @@
       "period": 14,
       "overbought": 61.0,
       "oversold": 50.0
+    },
+    {
+      "symbol": "NFLX",
+      "market": "stock",
+      "interval": "1h",
+      "period": 14,
+      "overbought": 50.0,
+      "oversold": 30.0
     }
   ],
   "_ayuda": {
