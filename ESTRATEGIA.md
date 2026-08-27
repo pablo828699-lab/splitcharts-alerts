@@ -48,6 +48,85 @@ Separadas por **lo que pueden firmar**, no por lo que guardan:
 La regla que justifica que sean 5 y no 1 ni 8: *una billetera que firma
 contratos nunca comparte dispositivo con el núcleo*.
 
+## Manual de operación (perps y spot)
+
+El tramo discrecional es una **mesa de operaciones** de 30.000 con reglas, no un
+permiso para improvisar.
+
+### El tamaño sale del stop
+
+```
+nocional = riesgo_usd / distancia_al_stop
+```
+
+Riesgo fijo de **450 USD** (1,5% de la mesa). Con un stop 8% abajo son 5.625 de
+nocional; a 3x, 1.875 de margen. **El apalancamiento es un resultado, nunca una
+decisión previa.** El tablero trae la calculadora con los topes cargados.
+
+Topes: 3x máximo, margen aislado siempre, liquidación nunca a menos de 25%,
+nocional máximo 10.000 por posición y 30.000 en total. Heat máximo 6% de la mesa
+(1.800 USD) — cuatro posiciones a riesgo pleno.
+
+### El funding decide el instrumento
+
+Ojo con la calibración: en Binance **0,01%/8h es el valor por defecto, no un
+techo**. Leerlo como "extremo" es el error clásico.
+
+| Funding (8h) | Anual | Lectura | Dónde abrir |
+|---|---|---|---|
+| ≤ 0% | — | Los cortos pagan | Perp (lo más barato para ir largo) |
+| 0 – 0,01% | ≤ 11% | Normal (default) | Indistinto |
+| 0,01 – 0,03% | 11–33% | Largos amontonándose | Spot |
+| > 0,03% | > 33% | Caro | Spot, no abrir largos apalancados |
+| > 0,05% | > 55% | Extremo | Evaluar largo spot + corto perp |
+
+Hoy (27-ago-2026): BTC +8,1% anual, ETH +2,2%, SOL +11,0% — **los tres en zona
+neutra**. Y el interés abierto de BTC está plano (+1,2% en 30 días) mientras el
+precio subió 23%: el rally fue de spot, no de apalancamiento. Es una subida más
+sana que una empujada por leverage, y hoy no hay penalización por usar perps.
+
+### Setups válidos
+
+Sólo se opera lo que entra en uno de estos tres:
+
+1. **Retroceso en tendencia** — sobre la media de 200 días, retroceso a la de 50
+   o a un techo que pasó a piso, RSI diario 40–50. Stop bajo el mínimo del retroceso.
+2. **Ruptura de rango con volumen** — cierre sobre el máximo de 20 días con
+   volumen > 1,5x el promedio. Stop de vuelta adentro. Spot: las rupturas fallan
+   seguido y el apalancamiento castiga el reintento.
+3. **Reversión desde extremo** — RSI diario < 25, funding negativo y precio en un
+   escalón cargado. Spot, sólo a favor de la tesis del ciclo.
+
+### Qué instrumento para qué
+
+| Uso | Instrumento | Nunca |
+|---|---|---|
+| Exposición direccional del ciclo | Spot | — |
+| Swing con stop definido | Spot, o perp ≤3x con funding neutro o negativo | Con funding cargado |
+| Cobertura del núcleo | Corto en perp | Más del 30% del núcleo |
+| Cosecha de funding | Largo spot + corto perp | Si obliga a mover el núcleo |
+
+**Los cortos son sólo cobertura.** Dentro de una tesis alcista de ciclo no se
+especula a la baja. La cobertura del núcleo se activa únicamente si se dispara la
+invalidación (cierre mensual bajo 46.000) y permite bajar exposición sin vender
+el núcleo ni mover la billetera fría.
+
+### Salidas
+
+- A **1,5R** se cierra la mitad y el stop va a punto de entrada: la operación ya
+  no puede perder.
+- El resto acompaña con stop bajo la media de 20 días, a cierre diario.
+- **Stop temporal**: si a los 15 días no se movió 1R, se cierra. El capital
+  quieto también cuesta.
+- Nunca se corre un stop hacia abajo. Nunca se promedia a la baja una perdedora.
+
+### Cortacircuitos
+
+- 3 pérdidas seguidas → la mesa para 5 días.
+- −10% en un mes → mitad de tamaño hasta hacer un nuevo máximo de capital.
+- −30% → se apaga por un trimestre.
+
+
 ## Cómo corre
 
 ```
@@ -99,6 +178,7 @@ por CORS y la página cae al respaldo empotrado por `build_dashboard.py`.
 | 🎯 Escalón tocado | El precio toca un peldaño — incluye la mecha entre corridas. |
 | 💰 Toma de ganancias | BTC alcanza un nivel de `rules.take_profit`. |
 | 🚨 Invalidación | BTC pierde el escalón más profundo (46.000). |
+| ⚖️ Funding | El funding de un activo cambia de banda (cambia dónde conviene abrir). |
 
 Cada una dispara **una sola vez**: el estado vive en `portfolio_state.json`, que
 el workflow commitea junto con el tablero.

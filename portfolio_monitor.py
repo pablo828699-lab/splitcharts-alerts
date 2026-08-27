@@ -39,6 +39,7 @@ for _s in (sys.stdout, sys.stderr):
         pass
 
 import data_source as ds
+import funding as fnd
 from oscillators import compute_oscillators
 from telegram_alerts import resolve_creds, send_telegram, load_config as load_alerts_config
 
@@ -214,6 +215,40 @@ def eval_invalidation(pf, market, state, fire):
             "texto": pf.get("rules", {}).get("invalidacion", "")}
 
 
+def eval_funding(pf, state, fire, fake=None):
+    """Semaforo de instrumento por funding, avisando solo al CAMBIAR de regimen.
+
+    Un aviso por corrida seria ruido: el funding se mueve todo el dia dentro de
+    la misma banda. Lo que importa operativamente es el cruce de banda, porque
+    es lo que cambia DONDE se abre la proxima posicion.
+    """
+    symbols = list(pf.get("ladders", {}).keys())
+    if fake:
+        snap = {}
+        for s_ in symbols:
+            r = fake.get(s_)
+            row = {"rate_8h": r,
+                   "anual_pct": round(fnd.annualized(r), 1) if r is not None else None}
+            row.update(fnd.classify(r))
+            snap[s_] = row
+    else:
+        snap = fnd.snapshot(symbols)
+    prev = state.setdefault("funding_nivel", {})
+
+    for sym, row in snap.items():
+        nivel = row["nivel"]
+        if nivel == "sin_dato":
+            continue
+        if prev.get(sym) and prev[sym] != nivel:
+            asset = sym.replace("USDT", "")
+            fire(f"⚖️ <b>FUNDING {asset}</b>: {prev[sym]} → <b>{nivel}</b>\n"
+                 f"{row['rate_8h']*100:+.4f}%/8h ({row['anual_pct']:+.1f}% anual)\n"
+                 f"<i>{row['texto']}</i>")
+        prev[sym] = nivel
+
+    return snap
+
+
 def cycle_view(pf, market):
     """Contexto de ciclo: caida desde el ATH, rebote desde el minimo, halving."""
     refs = pf.get("cycle", {}).get("refs", {})
@@ -275,7 +310,7 @@ def capital_view(pf, ladders):
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
-def run(dry=False, fake=None):
+def run(dry=False, fake=None, fake_funding=None):
     pf = load_portfolio()
     state = load_state()
     since = state.get("_last_check")
@@ -321,6 +356,7 @@ def run(dry=False, fake=None):
     ladders = eval_ladders(pf, market, state, fire)
     tps = eval_take_profit(pf, market, state, fire)
     inval = eval_invalidation(pf, market, state, fire)
+    funding_snap = eval_funding(pf, state, fire, fake_funding)
 
     payload = {
         "generado": _now_iso(),
@@ -332,6 +368,8 @@ def run(dry=False, fake=None):
         "dca_split": pf["sleeves"][0].get("split", {}),
         "take_profit": tps,
         "invalidacion": inval,
+        "funding": funding_snap,
+        "trading": pf.get("trading", {}),
         "wallets": pf["wallets"],
         "rules": pf["rules"],
         "alertas_esta_corrida": len(sent),
@@ -356,8 +394,11 @@ def main():
     ap.add_argument("--dry", action="store_true", help="no enviar a Telegram")
     ap.add_argument("--fake-prices", default=None,
                     help="inyectar precios, ej: BTCUSDT=60000,ETHUSDT=1800")
+    ap.add_argument("--fake-funding", default=None,
+                    help="inyectar funding por 8h, ej: BTCUSDT=0.0004,ETHUSDT=-0.00001")
     args = ap.parse_args()
-    sys.exit(run(dry=args.dry, fake=parse_fake(args.fake_prices)))
+    sys.exit(run(dry=args.dry, fake=parse_fake(args.fake_prices),
+                 fake_funding=parse_fake(args.fake_funding)))
 
 
 if __name__ == "__main__":

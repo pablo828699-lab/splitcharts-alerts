@@ -1,5 +1,10 @@
 {
   "ladder_touched": {},
   "tp_fired": {},
-  "_last_check": 1787839862
+  "funding_nivel": {
+    "BTCUSDT": "normal",
+    "ETHUSDT": "normal",
+    "SOLUSDT": "normal"
+  },
+  "_last_check": 1787840790
 }

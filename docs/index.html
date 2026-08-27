@@ -183,6 +183,61 @@ td.r,th.r{text-align:right}
 .wcard .wg{font-size:12.5px;color:var(--ink-2);margin:6px 0 0}
 .wcard .wr{font-size:12px;color:var(--muted);margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
 
+
+/* ---- mesa de operaciones ---- */
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:16px}
+.fcard{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  padding:13px 15px;box-shadow:var(--shadow);border-left:3px solid var(--fc,var(--sleep))
+}
+.fcard .ft{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.fcard .fs{font-weight:600;font-size:13.5px}
+.fcard .fr{font-size:17px;font-weight:600;margin:5px 0 1px;letter-spacing:-.01em}
+.fcard .fa{font-size:11.5px;color:var(--muted)}
+.fcard .fx{font-size:12px;color:var(--ink-2);margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+.lvl{
+  font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;
+  padding:2px 7px;border-radius:99px;background:var(--fc,var(--sleep));color:var(--surface)
+}
+
+.calc{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  padding:18px;box-shadow:var(--shadow)
+}
+.cin{display:grid;grid-template-columns:repeat(auto-fit,minmax(126px,1fr));gap:12px;margin-bottom:16px}
+.cin label{display:flex;flex-direction:column;gap:5px;font-size:11px;
+  letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.cin input{
+  font-family:"IBM Plex Mono",monospace;font-size:15px;font-variant-numeric:tabular-nums;
+  padding:8px 10px;border:1px solid var(--line);border-radius:7px;
+  background:var(--ground);color:var(--ink);width:100%
+}
+.cin input:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+.cout{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:12px;
+  padding-top:16px;border-top:1px solid var(--line)}
+.cout div{display:flex;flex-direction:column;gap:2px}
+.cout .k{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.cout .v{font-size:19px;font-weight:600;letter-spacing:-.02em}
+.cwarn{margin-top:14px;display:flex;flex-direction:column;gap:6px}
+.cwarn p{
+  margin:0;font-size:12.5px;padding:8px 11px;border-radius:7px;
+  background:var(--accent-soft);color:var(--accent);border-left:3px solid var(--accent)
+}
+.cwarn p.bad{background:transparent;color:var(--neg);border-left-color:var(--neg);
+  border:1px solid var(--neg);border-left-width:3px}
+.cwarn p.ok{background:transparent;color:var(--pos);border:1px solid var(--pos);border-left-width:3px}
+
+.setups{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.setup{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  padding:14px 16px;box-shadow:var(--shadow)
+}
+.setup .sn{font-weight:600;font-size:13.5px;margin-bottom:6px}
+.setup dl{margin:0;display:flex;flex-direction:column;gap:6px;font-size:12.5px}
+.setup dt{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.setup dd{margin:0;color:var(--ink-2)}
+.rules-list{margin:0;padding-left:18px;font-size:13px;color:var(--ink-2);display:flex;flex-direction:column;gap:6px}
+
 .note{
   font-size:12.5px;color:var(--muted);margin-top:32px;padding-top:16px;
   border-top:1px solid var(--line);max-width:70ch
@@ -251,6 +306,56 @@ td.r,th.r{text-align:right}
     <div class="rails" id="rails"></div>
   </section>
 
+
+  <section>
+    <div class="shead">
+      <h2>Mesa de operaciones</h2>
+      <p>El tamaño sale del stop. El instrumento lo decide el funding.</p>
+    </div>
+
+    <div class="eyebrow" style="margin-bottom:10px">Semáforo de funding · dónde conviene abrir</div>
+    <div class="fgrid" id="funding"></div>
+
+    <div class="eyebrow" style="margin:22px 0 10px">Calculadora de tamaño</div>
+    <div class="calc">
+      <div class="cin">
+        <label>Entrada<input type="number" id="c-entry" step="any" inputmode="decimal"></label>
+        <label>Stop<input type="number" id="c-stop" step="any" inputmode="decimal"></label>
+        <label>Riesgo USD<input type="number" id="c-risk" step="any" inputmode="decimal"></label>
+        <label>Apalancamiento<input type="number" id="c-lev" step="0.5" min="1" max="3" inputmode="decimal"></label>
+      </div>
+      <div class="cout">
+        <div><span class="k">Distancia</span><span class="v num" id="c-dist">—</span></div>
+        <div><span class="k">Nocional</span><span class="v num" id="c-not">—</span></div>
+        <div><span class="k">Unidades</span><span class="v num" id="c-unit">—</span></div>
+        <div><span class="k">Margen</span><span class="v num" id="c-marg">—</span></div>
+        <div><span class="k">Liquidación</span><span class="v num" id="c-liq">—</span></div>
+      </div>
+      <div class="cwarn" id="c-warn"></div>
+    </div>
+
+    <div class="eyebrow" style="margin:22px 0 10px">Setups válidos</div>
+    <div class="setups" id="setups"></div>
+
+    <div class="eyebrow" style="margin:22px 0 10px">Qué instrumento para qué</div>
+    <div class="tw"><table>
+      <thead><tr><th>Uso</th><th>Instrumento</th><th>Nunca</th></tr></thead>
+      <tbody id="instr"></tbody>
+    </table></div>
+
+    <div class="eyebrow" style="margin:22px 0 10px">Salidas y cortacircuitos</div>
+    <div class="slist">
+      <div class="scard" style="--c:var(--pos)">
+        <div class="sn" style="margin-bottom:8px">Salidas</div>
+        <ul class="rules-list" id="salidas"></ul>
+      </div>
+      <div class="scard" style="--c:var(--neg)">
+        <div class="sn" style="margin-bottom:8px">Cortacircuitos</div>
+        <ul class="rules-list" id="cortes"></ul>
+      </div>
+    </div>
+  </section>
+
   <section>
     <div class="shead">
       <h2>Salida escalonada</h2>
@@ -274,7 +379,7 @@ td.r,th.r{text-align:right}
 </div>
 
 <script>
-const FALLBACK = /*DATA:START*/{"generado":"2026-08-27T14:11:02Z","meta":{"nombre":"Cartera 300k — ciclo pre-halving","capital_total_usd":300000,"moneda":"USD","creado":"2026-08-27","horizonte":"hasta el pico post-halving estimado (2028-2029)","objetivo":"máxima rentabilidad ajustada por supervivencia; sin tramo de renta conservadora (hay liquidez fuera de esta cartera)"},"cycle":{"assets":[{"symbol":"BTCUSDT","asset":"BTC","price":79310.0,"rsi_1d":null,"ath":126287,"ath_fecha":"2025-10","min_ciclo":57739,"min_fecha":"2026-06","desde_ath_pct":-37.2,"desde_min_pct":37.4},{"symbol":"ETHUSDT","asset":"ETH","price":2493.0,"rsi_1d":null,"ath":4956,"ath_fecha":"2025-08","min_ciclo":1505,"min_fecha":"2026-06","desde_ath_pct":-49.7,"desde_min_pct":65.6},{"symbol":"SOLUSDT","asset":"SOL","price":105.14,"rsi_1d":null,"ath":295,"ath_fecha":"2025-01","min_ciclo":60.1,"min_fecha":"2026-06","desde_ath_pct":-64.4,"desde_min_pct":74.9},{"symbol":"BNBUSDT","asset":"BNB","price":707.55,"rsi_1d":null,"ath":1375,"ath_fecha":"2025-10","min_ciclo":537,"min_fecha":"2026-06","desde_ath_pct":-48.5,"desde_min_pct":31.8}],"last_halving":"2024-04-20","next_halving":"2028-04-15","dias_al_halving":596,"dias_desde_halving":859,"pct_del_ciclo":59.0},"capital":{"core":{"id":"nucleo","label":"Núcleo BTC largo plazo","usd":100000,"asset":"BTCUSDT","wallet":"cold-btc","regla":"No se toca. No se tradea. No se presta. No firma contratos. Se revisa 2 veces por año.","salida":"Venta escalonada solo en zona de euforia post-halving (ver rules.take_profit)"},"sleeves":[{"id":"dca","label":"DCA calendario","usd":60000,"color":"#4ade80","tesis":"Anti-timing. Compra fija cada quincena pase lo que pase. Es el único tramo que garantiza participar si el mínimo de junio-2026 ya fue EL mínimo.","regla_dura":"Nunca se saltea una compra por «está caro» ni se duplica por «está barato». Los dips los compra el tramo de escalones, no éste.","ejecucion":"24 compras quincenales de 2.500 USD durante 12 meses"},{"id":"escalones","label":"Escalones de precio (ladder)","usd":55000,"color":"#38bdf8","tesis":"Munición para caídas, con órdenes límite cargadas de antemano. Tamaño creciente hacia abajo: cuanto más duele, más se compra.","regla_dura":"Las órdenes viven en el exchange, no en la cabeza. Si no está cargada, no existe.","ejecucion":"Órdenes límite permanentes en el exchange. Se reponen al ejecutarse.","activado_usd":0,"pendiente_usd":55000},{"id":"beta","label":"Beta / rotación","usd":55000,"color":"#a78bfa","tesis":"El tramo que realmente busca el múltiplo del ciclo. Posiciones concentradas con tesis, revisadas cada trimestre.","regla_dura":"Máximo 8 posiciones. Ninguna supera el 20% del tramo. Corte en −40% por posición, sin excepción ni promediar a la baja.","ejecucion":"3 tramos: 40% ahora, 30% si BTC confirma sobre 88k semanal, 30% oportunista"},{"id":"discrecional","label":"Oportunidades discrecional","usd":30000,"color":"#fb923c","tesis":"Donde se expresan los swings, las narrativas y lo que levante el escáner. Dimensionado para que perderlo entero cueste 10% de la cartera.","regla_dura":"Stop −15% por operación. Si el tramo cae bajo 21.000 USD (−30%) se apaga y no opera por un trimestre.","ejecucion":"Máximo 5 posiciones simultáneas, hasta 6.000 USD cada una"}],"total":300000,"en_riesgo_pct":28.3},"ladders":{"BTCUSDT":[{"price":72000.0,"usd":5000,"tag":"retroceso 50% del rally de agosto","dist_pct":-9.2,"touched_at":null,"status":"cargado"},{"price":66000.0,"usd":6000,"tag":"vuelta al rango de consolidación jul-ago","dist_pct":-16.8,"touched_at":null,"status":"cargado"},{"price":60000.0,"usd":7000,"tag":"retest de la zona del mínimo de ciclo","dist_pct":-24.3,"touched_at":null,"status":"cargado"},{"price":54000.0,"usd":7000,"tag":"quiebre bajo el mínimo de junio-2026","dist_pct":-31.9,"touched_at":null,"status":"cargado"},{"price":46000.0,"usd":5000,"tag":"capitulación — solo si la tesis de ciclo sigue viva","dist_pct":-42.0,"touched_at":null,"status":"cargado"}],"ETHUSDT":[{"price":2200.0,"usd":3000,"tag":"primer retroceso","dist_pct":-11.8,"touched_at":null,"status":"cargado"},{"price":1900.0,"usd":4000,"tag":"media del rango feb-may","dist_pct":-23.8,"touched_at":null,"status":"cargado"},{"price":1650.0,"usd":4000,"tag":"zona de acumulación","dist_pct":-33.8,"touched_at":null,"status":"cargado"},{"price":1400.0,"usd":4000,"tag":"bajo el mínimo de ciclo","dist_pct":-43.8,"touched_at":null,"status":"cargado"}],"SOLUSDT":[{"price":92.0,"usd":2000,"tag":"primer retroceso","dist_pct":-12.5,"touched_at":null,"status":"cargado"},{"price":80.0,"usd":3000,"tag":"rango mar-may","dist_pct":-23.9,"touched_at":null,"status":"cargado"},{"price":68.0,"usd":3000,"tag":"zona del mínimo","dist_pct":-35.3,"touched_at":null,"status":"cargado"},{"price":55.0,"usd":2000,"tag":"bajo el mínimo de ciclo","dist_pct":-47.7,"touched_at":null,"status":"durmiente"}]},"dca":{"id":"dca","label":"DCA calendario","usd":60000,"color":"#4ade80","tesis":"Anti-timing. Compra fija cada quincena pase lo que pase. Es el único tramo que garantiza participar si el mínimo de junio-2026 ya fue EL mínimo.","ejecucion":"24 compras quincenales de 2.500 USD durante 12 meses","split":{"BTCUSDT":0.4,"ETHUSDT":0.35,"SOLUSDT":0.25},"destino":"cold-btc / cold-alt","regla_dura":"Nunca se saltea una compra por «está caro» ni se duplica por «está barato». Los dips los compra el tramo de escalones, no éste."},"dca_split":{"BTCUSDT":0.4,"ETHUSDT":0.35,"SOLUSDT":0.25},"take_profit":[{"trigger_btc":150000.0,"accion":"vender 10% de lo acumulado por DCA+escalones (no el núcleo)","dist_pct":89.1,"fired_at":null},{"trigger_btc":200000.0,"accion":"vender otro 20% acumulado + 25% del tramo beta","dist_pct":152.2,"fired_at":null},{"trigger_btc":260000.0,"accion":"vender otro 30% acumulado + 50% del tramo beta","dist_pct":227.8,"fired_at":null},{"trigger_btc":320000.0,"accion":"revisar salida del núcleo por primera vez","dist_pct":303.5,"fired_at":null}],"invalidacion":{"floor":46000.0,"active":false,"texto":"Si BTC cierra un mes bajo 46.000, se pausan los tramos beta y discrecional; DCA y escalones siguen (son justamente para eso)."},"wallets":[{"id":"cold-btc","label":"Fría BTC (núcleo)","tipo":"hardware","chains":["bitcoin"],"guarda":"Núcleo 100k + todo el BTC que gradúa a largo plazo","regla":"Nunca firma un contrato. Nunca se conecta a una dApp. Semilla en metal, passphrase aparte. Firma 2 veces por año."},{"id":"cold-alt","label":"Fría alts (núcleo)","tipo":"hardware","chains":["ethereum","solana","bsc"],"guarda":"ETH / SOL / BNB de largo plazo comprados por DCA y escalones","regla":"Dispositivo distinto (o cuenta distinta) del de BTC. Sólo recibe y manda a exchange propio. No firma approvals."},{"id":"hot-evm","label":"Caliente EVM","tipo":"software","chains":["ethereum","base","arbitrum","bsc"],"guarda":"Sólo el capital de beta y discrecional que esté operando en EVM","regla":"Es la billetera que asumís que se puede vaciar. Revocar approvals cada mes. Nunca tiene más de lo que estás dispuesto a perder."},{"id":"hot-sol","label":"Caliente Solana","tipo":"software","chains":["solana"],"guarda":"Beta y discrecional en Solana","regla":"Misma lógica que hot-evm, separada por cadena para que un contrato malicioso no alcance las dos."},{"id":"exchange","label":"Exchange (CEX)","tipo":"custodia de terceros","chains":[],"guarda":"Stablecoins del DCA y de los escalones + órdenes límite cargadas","regla":"Es un lugar de ejecución, no de custodia. Lo ejecutado se barre a frío según rules.sweep. 2FA por app, retiros con whitelist."}],"rules":{"sweep":"Todo lo comprado por DCA o escalones sale del exchange a billetera fría dentro de los 7 días.","rebalanceo":"Trimestral. Sólo entre tramos, nunca tocando el núcleo.","take_profit":[{"trigger_btc":150000,"accion":"vender 10% de lo acumulado por DCA+escalones (no el núcleo)"},{"trigger_btc":200000,"accion":"vender otro 20% acumulado + 25% del tramo beta"},{"trigger_btc":260000,"accion":"vender otro 30% acumulado + 50% del tramo beta"},{"trigger_btc":320000,"accion":"revisar salida del núcleo por primera vez"}],"invalidacion":"Si BTC cierra un mes bajo 46.000, se pausan los tramos beta y discrecional; DCA y escalones siguen (son justamente para eso)."},"alertas_esta_corrida":0,"errores":[]}/*DATA:END*/;
+const FALLBACK = /*DATA:START*/{"generado":"2026-08-27T14:26:30Z","meta":{"nombre":"Cartera 300k — ciclo pre-halving","capital_total_usd":300000,"moneda":"USD","creado":"2026-08-27","horizonte":"hasta el pico post-halving estimado (2028-2029)","objetivo":"máxima rentabilidad ajustada por supervivencia; sin tramo de renta conservadora (hay liquidez fuera de esta cartera)"},"cycle":{"assets":[{"symbol":"BTCUSDT","asset":"BTC","price":79310.0,"rsi_1d":null,"ath":126287,"ath_fecha":"2025-10","min_ciclo":57739,"min_fecha":"2026-06","desde_ath_pct":-37.2,"desde_min_pct":37.4},{"symbol":"ETHUSDT","asset":"ETH","price":2493.0,"rsi_1d":null,"ath":4956,"ath_fecha":"2025-08","min_ciclo":1505,"min_fecha":"2026-06","desde_ath_pct":-49.7,"desde_min_pct":65.6},{"symbol":"SOLUSDT","asset":"SOL","price":105.14,"rsi_1d":null,"ath":295,"ath_fecha":"2025-01","min_ciclo":60.1,"min_fecha":"2026-06","desde_ath_pct":-64.4,"desde_min_pct":74.9},{"symbol":"BNBUSDT","asset":"BNB","price":707.55,"rsi_1d":null,"ath":1375,"ath_fecha":"2025-10","min_ciclo":537,"min_fecha":"2026-06","desde_ath_pct":-48.5,"desde_min_pct":31.8}],"last_halving":"2024-04-20","next_halving":"2028-04-15","dias_al_halving":596,"dias_desde_halving":859,"pct_del_ciclo":59.0},"capital":{"core":{"id":"nucleo","label":"Núcleo BTC largo plazo","usd":100000,"asset":"BTCUSDT","wallet":"cold-btc","regla":"No se toca. No se tradea. No se presta. No firma contratos. Se revisa 2 veces por año.","salida":"Venta escalonada solo en zona de euforia post-halving (ver rules.take_profit)"},"sleeves":[{"id":"dca","label":"DCA calendario","usd":60000,"color":"#4ade80","tesis":"Anti-timing. Compra fija cada quincena pase lo que pase. Es el único tramo que garantiza participar si el mínimo de junio-2026 ya fue EL mínimo.","regla_dura":"Nunca se saltea una compra por «está caro» ni se duplica por «está barato». Los dips los compra el tramo de escalones, no éste.","ejecucion":"24 compras quincenales de 2.500 USD durante 12 meses"},{"id":"escalones","label":"Escalones de precio (ladder)","usd":55000,"color":"#38bdf8","tesis":"Munición para caídas, con órdenes límite cargadas de antemano. Tamaño creciente hacia abajo: cuanto más duele, más se compra.","regla_dura":"Las órdenes viven en el exchange, no en la cabeza. Si no está cargada, no existe.","ejecucion":"Órdenes límite permanentes en el exchange. Se reponen al ejecutarse.","activado_usd":0,"pendiente_usd":55000},{"id":"beta","label":"Beta / rotación","usd":55000,"color":"#a78bfa","tesis":"El tramo que realmente busca el múltiplo del ciclo. Posiciones concentradas con tesis, revisadas cada trimestre.","regla_dura":"Máximo 8 posiciones. Ninguna supera el 20% del tramo. Corte en −40% por posición, sin excepción ni promediar a la baja.","ejecucion":"3 tramos: 40% ahora, 30% si BTC confirma sobre 88k semanal, 30% oportunista"},{"id":"discrecional","label":"Mesa de operaciones","usd":30000,"color":"#fb923c","tesis":"Swing y perps con reglas: el tamaño sale del stop y el instrumento lo decide el funding. Dimensionada para que perderla entera cueste 10% de la cartera.","regla_dura":"Stop −15% por operación. Si el tramo cae bajo 21.000 USD (−30%) se apaga y no opera por un trimestre.","ejecucion":"Riesgo 1,5% por operación (450 USD), heat máximo 6% (1.800 USD), hasta 3x aislado"}],"total":300000,"en_riesgo_pct":28.3},"ladders":{"BTCUSDT":[{"price":72000.0,"usd":5000,"tag":"retroceso 50% del rally de agosto","dist_pct":-9.2,"touched_at":null,"status":"cargado"},{"price":66000.0,"usd":6000,"tag":"vuelta al rango de consolidación jul-ago","dist_pct":-16.8,"touched_at":null,"status":"cargado"},{"price":60000.0,"usd":7000,"tag":"retest de la zona del mínimo de ciclo","dist_pct":-24.3,"touched_at":null,"status":"cargado"},{"price":54000.0,"usd":7000,"tag":"quiebre bajo el mínimo de junio-2026","dist_pct":-31.9,"touched_at":null,"status":"cargado"},{"price":46000.0,"usd":5000,"tag":"capitulación — solo si la tesis de ciclo sigue viva","dist_pct":-42.0,"touched_at":null,"status":"cargado"}],"ETHUSDT":[{"price":2200.0,"usd":3000,"tag":"primer retroceso","dist_pct":-11.8,"touched_at":null,"status":"cargado"},{"price":1900.0,"usd":4000,"tag":"media del rango feb-may","dist_pct":-23.8,"touched_at":null,"status":"cargado"},{"price":1650.0,"usd":4000,"tag":"zona de acumulación","dist_pct":-33.8,"touched_at":null,"status":"cargado"},{"price":1400.0,"usd":4000,"tag":"bajo el mínimo de ciclo","dist_pct":-43.8,"touched_at":null,"status":"cargado"}],"SOLUSDT":[{"price":92.0,"usd":2000,"tag":"primer retroceso","dist_pct":-12.5,"touched_at":null,"status":"cargado"},{"price":80.0,"usd":3000,"tag":"rango mar-may","dist_pct":-23.9,"touched_at":null,"status":"cargado"},{"price":68.0,"usd":3000,"tag":"zona del mínimo","dist_pct":-35.3,"touched_at":null,"status":"cargado"},{"price":55.0,"usd":2000,"tag":"bajo el mínimo de ciclo","dist_pct":-47.7,"touched_at":null,"status":"durmiente"}]},"dca":{"id":"dca","label":"DCA calendario","usd":60000,"color":"#4ade80","tesis":"Anti-timing. Compra fija cada quincena pase lo que pase. Es el único tramo que garantiza participar si el mínimo de junio-2026 ya fue EL mínimo.","ejecucion":"24 compras quincenales de 2.500 USD durante 12 meses","split":{"BTCUSDT":0.4,"ETHUSDT":0.35,"SOLUSDT":0.25},"destino":"cold-btc / cold-alt","regla_dura":"Nunca se saltea una compra por «está caro» ni se duplica por «está barato». Los dips los compra el tramo de escalones, no éste."},"dca_split":{"BTCUSDT":0.4,"ETHUSDT":0.35,"SOLUSDT":0.25},"take_profit":[{"trigger_btc":150000.0,"accion":"vender 10% de lo acumulado por DCA+escalones (no el núcleo)","dist_pct":89.1,"fired_at":null},{"trigger_btc":200000.0,"accion":"vender otro 20% acumulado + 25% del tramo beta","dist_pct":152.2,"fired_at":null},{"trigger_btc":260000.0,"accion":"vender otro 30% acumulado + 50% del tramo beta","dist_pct":227.8,"fired_at":null},{"trigger_btc":320000.0,"accion":"revisar salida del núcleo por primera vez","dist_pct":303.5,"fired_at":null}],"invalidacion":{"floor":46000.0,"active":false,"texto":"Si BTC cierra un mes bajo 46.000, se pausan los tramos beta y discrecional; DCA y escalones siguen (son justamente para eso)."},"funding":{"BTCUSDT":{"rate_8h":7.378e-05,"anual_pct":8.1,"nivel":"normal","instrumento":"indistinto","texto":"Funding en zona neutra. Spot o perp, según el setup."},"ETHUSDT":{"rate_8h":1.997e-05,"anual_pct":2.2,"nivel":"normal","instrumento":"indistinto","texto":"Funding en zona neutra. Spot o perp, según el setup."},"SOLUSDT":{"rate_8h":0.0001,"anual_pct":11.0,"nivel":"normal","instrumento":"indistinto","texto":"Funding en zona neutra. Spot o perp, según el setup."}},"trading":{"_doc":"Manual de operación de los tramos beta y discrecional. Define QUÉ instrumento usar, CUÁNTO arriesgar y CUÁNDO salir. El tamaño sale del stop, nunca al revés.","mesa":{"capital_usd":30000,"_nota":"Es el tramo discrecional. La mesa nunca toma capital de DCA, escalones ni núcleo.","margen_perps_max_usd":12000,"swing_spot_usd":18000,"riesgo_por_trade_pct":1.5,"riesgo_por_trade_usd":450,"heat_max_pct":6.0,"heat_max_usd":1800,"_heat":"Heat = suma del riesgo vivo (entrada − stop) de todas las posiciones abiertas. Con 1,5% por trade, el tope de 6% son 4 posiciones a riesgo pleno."},"dimensionamiento":{"formula":"nocional = riesgo_usd / distancia_al_stop_pct","ejemplo":"Riesgo 450 USD con stop 8% abajo -> nocional 5.625 USD. A 3x son 1.875 USD de margen.","regla":"El apalancamiento es un RESULTADO de la distancia al stop, nunca una decisión previa."},"perps":{"apalancamiento_max":3,"margen":"Aislado siempre. Nunca cruzado: una posición no puede llevarse a las demás.","distancia_liquidacion_min_pct":25,"nocional_total_max_usd":30000,"nocional_por_posicion_max_usd":10000,"_por_posicion":"Ningún trade supera 1/3 de la mesa en nocional. Sin este tope, un stop muy ajustado genera un nocional enorme que pasa el control de riesgo por trade pero concentra todo el libro en una posición.","_nocional":"Nunca más de 1:1 contra la mesa, sumando todas las posiciones abiertas.","largos":"Sólo con funding neutro o negativo. Con funding cargado la misma exposición va a spot.","cortos":"Sólo como cobertura del núcleo. Nunca especulación bajista dentro de la tesis alcista del ciclo.","cobertura_nucleo":{"cuando":"Sólo si se dispara la regla de invalidación (cierre mensual bajo 46.000).","cuanto_max_pct_nucleo":30,"por_que":"Permite reducir exposición sin vender el núcleo ni mover la billetera fría.","cierre":"Se cierra cuando el precio recupera el nivel de invalidación."}},"funding":{"_doc":"Umbrales en % por intervalo de 8h. OJO: 0,01%/8h es el DEFAULT de Binance, no un techo.","neutral_8h_pct":0.01,"cargado_8h_pct":0.03,"extremo_8h_pct":0.05,"cash_and_carry":"Con funding sostenido sobre 0,03%/8h (~33% anual): largo spot + corto perp del mismo tamaño. No es una tenencia conservadora, es cosechar el apalancamiento ajeno; se desarma cuando el funding vuelve a neutro."},"setups":[{"id":"retroceso","nombre":"Retroceso en tendencia","condiciones":"Precio sobre la media de 200 días · retroceso a la media de 50 días o a un techo de rango que pasó a ser piso · RSI diario entre 40 y 50","stop":"Bajo el mínimo del retroceso","instrumento":"Spot, o perp si el funding lo permite"},{"id":"ruptura","nombre":"Ruptura de rango con volumen","condiciones":"Cierre diario sobre el máximo de 20 días · volumen mayor a 1,5x el promedio de 20 días","stop":"De vuelta adentro del rango","instrumento":"Spot: las rupturas fallan seguido y el apalancamiento castiga el reintento"},{"id":"reversion","nombre":"Reversión desde extremo","condiciones":"RSI diario bajo 25 · funding negativo · precio en un escalón cargado","stop":"Bajo el escalón siguiente","instrumento":"Spot. Sólo a favor de la tesis del ciclo, nunca en corto"}],"salidas":{"primer_objetivo":"A 1,5R se cierra la mitad y el stop va a punto de entrada. A partir de ahí la operación no puede perder.","resto":"Se acompaña con stop bajo la media de 20 días, evaluado a cierre diario.","stop_temporal":"Si a los 15 días no se movió 1R, se cierra. El capital quieto también cuesta.","nunca":"No se corre un stop hacia abajo. No se promedia a la baja una posición perdedora."},"cortacircuitos":["3 pérdidas seguidas → la mesa para 5 días.","−10% de la mesa en un mes → se opera a mitad de tamaño hasta hacer un nuevo máximo de capital.","−30% de la mesa → se apaga por un trimestre."],"instrumento_por_uso":[{"uso":"Exposición direccional del ciclo","instrumento":"Spot","nunca":"—"},{"uso":"Swing con stop definido","instrumento":"Spot, o perp ≤3x si el funding es neutro o negativo","nunca":"Con funding cargado"},{"uso":"Cobertura del núcleo","instrumento":"Corto en perp","nunca":"Más del 30% del núcleo"},{"uso":"Cosecha de funding","instrumento":"Largo spot + corto perp","nunca":"Si obliga a mover el núcleo"}]},"wallets":[{"id":"cold-btc","label":"Fría BTC (núcleo)","tipo":"hardware","chains":["bitcoin"],"guarda":"Núcleo 100k + todo el BTC que gradúa a largo plazo","regla":"Nunca firma un contrato. Nunca se conecta a una dApp. Semilla en metal, passphrase aparte. Firma 2 veces por año."},{"id":"cold-alt","label":"Fría alts (núcleo)","tipo":"hardware","chains":["ethereum","solana","bsc"],"guarda":"ETH / SOL / BNB de largo plazo comprados por DCA y escalones","regla":"Dispositivo distinto (o cuenta distinta) del de BTC. Sólo recibe y manda a exchange propio. No firma approvals."},{"id":"hot-evm","label":"Caliente EVM","tipo":"software","chains":["ethereum","base","arbitrum","bsc"],"guarda":"Sólo el capital de beta y discrecional que esté operando en EVM","regla":"Es la billetera que asumís que se puede vaciar. Revocar approvals cada mes. Nunca tiene más de lo que estás dispuesto a perder."},{"id":"hot-sol","label":"Caliente Solana","tipo":"software","chains":["solana"],"guarda":"Beta y discrecional en Solana","regla":"Misma lógica que hot-evm, separada por cadena para que un contrato malicioso no alcance las dos."},{"id":"exchange","label":"Exchange (CEX)","tipo":"custodia de terceros","chains":[],"guarda":"Stablecoins del DCA y de los escalones + órdenes límite cargadas","regla":"Es un lugar de ejecución, no de custodia. Lo ejecutado se barre a frío según rules.sweep. 2FA por app, retiros con whitelist."}],"rules":{"sweep":"Todo lo comprado por DCA o escalones sale del exchange a billetera fría dentro de los 7 días.","rebalanceo":"Trimestral. Sólo entre tramos, nunca tocando el núcleo.","take_profit":[{"trigger_btc":150000,"accion":"vender 10% de lo acumulado por DCA+escalones (no el núcleo)"},{"trigger_btc":200000,"accion":"vender otro 20% acumulado + 25% del tramo beta"},{"trigger_btc":260000,"accion":"vender otro 30% acumulado + 50% del tramo beta"},{"trigger_btc":320000,"accion":"revisar salida del núcleo por primera vez"}],"invalidacion":"Si BTC cierra un mes bajo 46.000, se pausan los tramos beta y discrecional; DCA y escalones siguen (son justamente para eso)."},"alertas_esta_corrida":0,"errores":[]}/*DATA:END*/;
 const fmt = (n,d) => n==null ? "—" : n.toLocaleString("es-AR",{minimumFractionDigits:d??0,maximumFractionDigits:d??0});
 const usd = n => "$" + fmt(n);
 const pc  = n => (n>0?"+":"") + n.toFixed(1) + "%";
@@ -367,6 +472,86 @@ function render(d){
       <p class="wg">${w.guarda}</p>
       <div class="wr">${w.regla}</div>
     </div>`).join("");
+
+
+  // ---- mesa: funding ----
+  const FC = {negativo:"var(--pos)", normal:"var(--wait)", cargado:"var(--accent)",
+              caro:"var(--neg)", extremo:"var(--neg)", sin_dato:"var(--sleep)"};
+  const INSTR = {perp:"perp", spot:"spot", indistinto:"spot o perp",
+                 cash_carry:"cash & carry", sin_dato:"spot"};
+  document.getElementById("funding").innerHTML = Object.entries(d.funding||{}).map(([sym,f])=>`
+    <div class="fcard" style="--fc:${FC[f.nivel]||"var(--sleep)"}">
+      <div class="ft"><span class="fs">${sym.replace("USDT","")}</span>
+        <span class="lvl">${f.nivel.replace("_"," ")}</span></div>
+      <div class="fr num">${f.rate_8h==null?"—":(f.rate_8h*100>=0?"+":"")+(f.rate_8h*100).toFixed(4)+"%"}</div>
+      <div class="fa num">${f.anual_pct==null?"por 8 h":`${f.anual_pct>=0?"+":""}${f.anual_pct}% anual`}</div>
+      <div class="fx">Abrir en <b>${INSTR[f.instrumento]||f.instrumento}</b>. ${f.texto}</div>
+    </div>`).join("");
+
+  // ---- mesa: calculadora ----
+  const T = d.trading||{}, MESA = T.mesa||{}, PERP = T.perps||{};
+  const $ = id => document.getElementById(id);
+  const btcPx = (d.cycle.assets.find(a=>a.symbol==="BTCUSDT")||{}).price || 0;
+  $("c-entry").value = Math.round(btcPx);
+  $("c-stop").value  = Math.round(btcPx*0.92);
+  $("c-risk").value  = MESA.riesgo_por_trade_usd ?? 450;
+  $("c-lev").value   = 1;
+
+  function calc(){
+    const e=+$("c-entry").value, s=+$("c-stop").value,
+          r=+$("c-risk").value, L=Math.max(1,+$("c-lev").value||1);
+    const W=$("c-warn"); W.innerHTML="";
+    if(!(e>0)||!(s>0)||!(r>0)||s>=e){
+      ["c-dist","c-not","c-unit","c-marg","c-liq"].forEach(i=>$(i).textContent="—");
+      W.innerHTML='<p class="bad">El stop tiene que estar por debajo de la entrada.</p>';
+      return;
+    }
+    const dist=(e-s)/e, notional=r/dist, units=notional/e, margin=notional/L, liq=100/L;
+    $("c-dist").textContent=(dist*100).toFixed(1)+"%";
+    $("c-not").textContent=usd(Math.round(notional));
+    $("c-unit").textContent=units>=1?units.toFixed(3):units.toFixed(5);
+    $("c-marg").textContent=usd(Math.round(margin));
+    $("c-liq").textContent = L>1 ? "−"+liq.toFixed(0)+"%" : "—";
+
+    const w=[];
+    const lmax=PERP.apalancamiento_max ?? 3;
+    if(L>lmax) w.push(["bad",`Apalancamiento ${L}x sobre el máximo de ${lmax}x.`]);
+    const liqMin=PERP.distancia_liquidacion_min_pct ?? 25;
+    if(L>1 && liq<liqMin) w.push(["bad",`Liquidación a ${liq.toFixed(0)}%, bajo el mínimo de ${liqMin}%. Bajá el apalancamiento.`]);
+    const pmax=PERP.nocional_por_posicion_max_usd;
+    if(pmax && notional>pmax) w.push(["bad",`Nocional ${usd(Math.round(notional))} sobre el tope por posición de ${usd(pmax)}. El stop está demasiado ajustado para este riesgo.`]);
+    const nmax=PERP.nocional_total_max_usd;
+    if(nmax && notional>nmax) w.push(["bad",`Nocional ${usd(Math.round(notional))} sobre el tope total de ${usd(nmax)}.`]);
+    if(MESA.capital_usd && notional>MESA.capital_usd*0.5 && (!pmax||notional<=pmax))
+      w.push(["",`Este nocional es el ${Math.round(notional/MESA.capital_usd*100)}% de la mesa: mucha concentración en una sola posición.`]);
+    const mmax=MESA.margen_perps_max_usd;
+    if(L>1 && mmax && margin>mmax) w.push(["bad",`Margen ${usd(Math.round(margin))} sobre el tope de perps (${usd(mmax)}).`]);
+    if(MESA.heat_max_usd) w.push(["","Con este riesgo entran "+Math.floor(MESA.heat_max_usd/r)+" posiciones antes de tocar el heat máximo de "+usd(MESA.heat_max_usd)+"."]);
+    if(!w.some(x=>x[0]==="bad")) w.unshift(["ok","Dentro de las reglas de la mesa."]);
+    W.innerHTML=w.map(([c,t])=>`<p class="${c}">${t}</p>`).join("");
+  }
+  ["c-entry","c-stop","c-risk","c-lev"].forEach(i=>$(i).addEventListener("input",calc));
+  calc();
+
+  // ---- mesa: setups, instrumentos, reglas ----
+  document.getElementById("setups").innerHTML = (T.setups||[]).map(s=>`
+    <div class="setup">
+      <div class="sn">${s.nombre}</div>
+      <dl>
+        <div><dt>Condiciones</dt><dd>${s.condiciones}</dd></div>
+        <div><dt>Stop</dt><dd>${s.stop}</dd></div>
+        <div><dt>Instrumento</dt><dd>${s.instrumento}</dd></div>
+      </dl>
+    </div>`).join("");
+
+  document.getElementById("instr").innerHTML = (T.instrumento_por_uso||[]).map(r=>`
+    <tr><td>${r.uso}</td><td><b>${r.instrumento}</b></td><td style="color:var(--muted)">${r.nunca}</td></tr>`).join("");
+
+  const sal=T.salidas||{};
+  document.getElementById("salidas").innerHTML =
+    [sal.primer_objetivo,sal.resto,sal.stop_temporal,sal.nunca].filter(Boolean).map(x=>`<li>${x}</li>`).join("");
+  document.getElementById("cortes").innerHTML =
+    (T.cortacircuitos||[]).map(x=>`<li>${x}</li>`).join("");
 
   document.getElementById("note").textContent =
     "Regla de barrido: " + d.rules.sweep + " — Invalidación: " + d.rules.invalidacion +
