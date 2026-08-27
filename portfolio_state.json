@@ -6,5 +6,55 @@
     "ETHUSDT": "normal",
     "SOLUSDT": "normal"
   },
-  "_last_check": 1787840790
+  "wallets_snapshot": {
+    "total_usd": 0.0,
+    "por_wallet": {
+      "sin-asignar": {
+        "usd": 0.0,
+        "activos": {},
+        "direcciones": 5
+      }
+    },
+    "direcciones": [
+      {
+        "addr_corta": "0x0888\u20269f11",
+        "wallet": "sin-asignar",
+        "nota": "",
+        "usd": 0.0,
+        "activos": {}
+      },
+      {
+        "addr_corta": "0x7722\u2026dc76",
+        "wallet": "sin-asignar",
+        "nota": "",
+        "usd": 0.0,
+        "activos": {}
+      },
+      {
+        "addr_corta": "0x5175\u20269281",
+        "wallet": "sin-asignar",
+        "nota": "",
+        "usd": 0.0,
+        "activos": {}
+      },
+      {
+        "addr_corta": "0x15c0\u202625a4",
+        "wallet": "sin-asignar",
+        "nota": "",
+        "usd": 0.0,
+        "activos": {}
+      },
+      {
+        "addr_corta": "0x70ce\u2026d955",
+        "wallet": "sin-asignar",
+        "nota": "",
+        "usd": 0.0,
+        "activos": {}
+      }
+    ],
+    "publicar": false,
+    "cacheado_hace_s": 0
+  },
+  "wallets_ts": 1787860713,
+  "_last_check": 1787860713
 }

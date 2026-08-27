@@ -40,6 +40,7 @@ for _s in (sys.stdout, sys.stderr):
 
 import data_source as ds
 import funding as fnd
+import wallets as wl
 from oscillators import compute_oscillators
 from telegram_alerts import resolve_creds, send_telegram, load_config as load_alerts_config
 
@@ -249,6 +250,56 @@ def eval_funding(pf, state, fire, fake=None):
     return snap
 
 
+# Los saldos on-chain no cambian cada 5 minutos y cada refresco son decenas de
+# llamadas a RPC públicos gratuitos. Se recalculan como mucho cada media hora.
+WALLET_TTL = int(os.environ.get("WALLET_TTL", 1800))
+
+
+def eval_wallets(market, state, fire):
+    """Saldos on-chain con caché, avisando cuando una CANTIDAD cambia.
+
+    Se compara cantidad de token, no valor en USD: el valor se mueve con el
+    mercado todo el tiempo, mientras que un cambio de cantidad significa que
+    hubo una transacción. Sirve para confirmar un barrido a frío y, sobre todo,
+    para enterarse de un movimiento que no hiciste vos.
+    """
+    cfg = wl.load_config()
+    if not cfg or not cfg.get("direcciones"):
+        return None
+
+    cached = state.get("wallets_snapshot")
+    edad = time.time() - state.get("wallets_ts", 0)
+    if cached and edad < WALLET_TTL:
+        cached["cacheado_hace_s"] = int(edad)
+        return cached
+
+    precios = {k: v["price"] for k, v in market.items()}
+    try:
+        snap = wl.snapshot(precios, cfg)
+    except Exception as exc:
+        _log(f"saldos on-chain no disponibles: {exc}")
+        return cached
+
+    if not snap:
+        return cached
+
+    # Comparar cantidades contra la foto anterior.
+    prev = (cached or {}).get("por_wallet", {})
+    for nombre, w in snap.get("por_wallet", {}).items():
+        antes = (prev.get(nombre) or {}).get("activos", {})
+        for sym, qty in w["activos"].items():
+            q0 = antes.get(sym, 0.0)
+            if antes and abs(qty - q0) > max(1e-8, abs(q0) * 1e-6):
+                signo = "entrada" if qty > q0 else "salida"
+                fire(f"👛 <b>MOVIMIENTO</b> en {nombre}\n"
+                     f"{sym}: {q0:,.6f} → <b>{qty:,.6f}</b> ({signo})")
+
+    state["wallets_snapshot"] = snap
+    state["wallets_ts"] = int(time.time())
+    snap["cacheado_hace_s"] = 0
+    return snap
+
+
 def cycle_view(pf, market):
     """Contexto de ciclo: caida desde el ATH, rebote desde el minimo, halving."""
     refs = pf.get("cycle", {}).get("refs", {})
@@ -357,6 +408,7 @@ def run(dry=False, fake=None, fake_funding=None):
     tps = eval_take_profit(pf, market, state, fire)
     inval = eval_invalidation(pf, market, state, fire)
     funding_snap = eval_funding(pf, state, fire, fake_funding)
+    holdings = eval_wallets(market, state, fire)
 
     payload = {
         "generado": _now_iso(),
@@ -369,6 +421,8 @@ def run(dry=False, fake=None, fake_funding=None):
         "take_profit": tps,
         "invalidacion": inval,
         "funding": funding_snap,
+        "holdings": (holdings if (holdings or {}).get("publicar")
+                     else {"configurado": bool(holdings), "publicar": False}),
         "trading": pf.get("trading", {}),
         "wallets": pf["wallets"],
         "rules": pf["rules"],

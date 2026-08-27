@@ -1,5 +1,5 @@
 {
-  "generado": "2026-08-27T14:26:30Z",
+  "generado": "2026-08-27T19:58:33Z",
   "meta": {
     "nombre": "Cartera 300k — ciclo pre-halving",
     "capital_total_usd": 300000,
@@ -63,7 +63,7 @@
     "next_halving": "2028-04-15",
     "dias_al_halving": 596,
     "dias_desde_halving": 859,
-    "pct_del_ciclo": 59.0
+    "pct_del_ciclo": 59.1
   },
   "capital": {
     "core": {
@@ -303,6 +303,10 @@
       "instrumento": "indistinto",
       "texto": "Funding en zona neutra. Spot o perp, según el setup."
     }
+  },
+  "holdings": {
+    "configurado": true,
+    "publicar": false
   },
   "trading": {
     "_doc": "Manual de operación de los tramos beta y discrecional. Define QUÉ instrumento usar, CUÁNTO arriesgar y CUÁNDO salir. El tamaño sale del stop, nunca al revés.",

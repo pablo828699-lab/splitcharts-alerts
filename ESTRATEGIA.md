@@ -127,6 +127,51 @@ el núcleo ni mover la billetera fría.
 - −30% → se apaga por un trimestre.
 
 
+## Saldos on-chain (solo lectura)
+
+El monitor puede leer los saldos reales de las billeteras EVM y avisar cuando se
+mueven. Nunca toca claves: con una dirección alcanza para consultar, y el módulo
+no firma ni arma transacciones.
+
+**Las direcciones no van en `portfolio.json`.** Este repo es público y el
+historial de git es permanente. Viven en:
+
+- `wallets.local.json` — ignorado por git, para correr localmente.
+- Secret `WALLET_ADDRESSES` — el mismo JSON, para GitHub Actions.
+
+```json
+{
+  "publicar_saldos": false,
+  "direcciones": [
+    { "addr": "0x…", "wallet": "hot-evm", "nota": "operativa" }
+  ]
+}
+```
+
+`publicar_saldos: false` (por defecto) mantiene los importes **fuera** de
+`docs/data.json`, que se publica. Los números viajan sólo por Telegram. Ponerlo
+en `true` sólo tiene sentido si el repo y el sitio pasan a ser privados.
+
+Se leen ETH/BNB nativos y USDC, USDT, WBTC/BTCB y WETH en Ethereum, Base,
+Arbitrum y BSC, contra RPC públicos con respaldo. Ojo con los decimales: USDT en
+BSC tiene 18, no 6.
+
+Los saldos se refrescan **como mucho cada 30 minutos** (`WALLET_TTL`): no cambian
+cada 5 minutos y cada refresco son decenas de llamadas a RPC gratuitos.
+
+### Alerta de movimiento
+
+Compara **cantidades**, no valor en USD — el valor se mueve con el mercado todo
+el tiempo, pero un cambio de cantidad significa que hubo una transacción:
+
+| Alerta | Cuándo |
+|---|---|
+| 👛 Movimiento | Cambió la cantidad de un token en alguna billetera. |
+
+Sirve para confirmar un barrido a frío y, sobre todo, para enterarte de un
+movimiento que no hiciste vos.
+
+
 ## Cómo corre
 
 ```

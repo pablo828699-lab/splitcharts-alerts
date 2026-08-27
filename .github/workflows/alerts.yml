@@ -45,6 +45,9 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          # Opcional: JSON con las direcciones a leer. Sin este secret el
+          # monitor sigue funcionando, sin la parte de saldos on-chain.
+          WALLET_ADDRESSES: ${{ secrets.WALLET_ADDRESSES }}
         run: |
           python portfolio_monitor.py --once
           python build_dashboard.py
