@@ -207,6 +207,20 @@
       "level": 80.35,
       "direction": "above",
       "note": "long y ver rsi mas de 50 en 1 hs"
+    },
+    {
+      "symbol": "MRVLBUSDT",
+      "market": "crypto",
+      "level": 220.83,
+      "direction": "below",
+      "note": ""
+    },
+    {
+      "symbol": "MRVLBUSDT",
+      "market": "crypto",
+      "level": 224.6,
+      "direction": "above",
+      "note": ""
     }
   ],
   "rsi_alerts": [
