@@ -221,6 +221,20 @@
       "level": 224.6,
       "direction": "above",
       "note": ""
+    },
+    {
+      "symbol": "NVDA",
+      "market": "stock",
+      "level": 223.01,
+      "direction": "above",
+      "note": "long"
+    },
+    {
+      "symbol": "NVDA",
+      "market": "stock",
+      "level": 219.0,
+      "direction": "below",
+      "note": "ven retest y long"
     }
   ],
   "rsi_alerts": [
