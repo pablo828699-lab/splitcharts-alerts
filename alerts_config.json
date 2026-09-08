@@ -235,6 +235,27 @@
       "level": 219.0,
       "direction": "below",
       "note": "ven retest y long"
+    },
+    {
+      "symbol": "TSLA",
+      "market": "stock",
+      "level": 353.53,
+      "direction": "above",
+      "note": "entrada setup LH 4H (TP 366.25)"
+    },
+    {
+      "symbol": "TSLA",
+      "market": "stock",
+      "level": 345.05,
+      "direction": "below",
+      "note": "INVALIDACION: pierde OB alcista"
+    },
+    {
+      "symbol": "TSLA",
+      "market": "stock",
+      "level": 368.0,
+      "direction": "above",
+      "note": "el muro 368-384 (VAL diario + OB bajista)"
     }
   ],
   "rsi_alerts": [
