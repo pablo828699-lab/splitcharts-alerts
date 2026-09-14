@@ -6,7 +6,18 @@ name: SplitCharts Alerts
 on:
   repository_dispatch:
     types: [run-alerts]
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      quotes:
+        description: "Tickers separados por espacio (ej: MRVL AMD NVDA). Si se completa, solo imprime precios y NO corre las alertas."
+        required: false
+        default: ""
+      market:
+        description: "Fuente para los tickers de arriba"
+        required: false
+        default: "stock"
+        type: choice
+        options: [stock, crypto]
 
 # Permite que el job commitee de vuelta el estado (alerts_state.json).
 permissions:
@@ -32,13 +43,19 @@ jobs:
       - name: Install deps
         run: pip install requests "numpy<2" pandas ta yfinance
 
+      - name: Quote snapshot
+        if: inputs.quotes != ''
+        run: python quotes.py --market "${{ inputs.market }}" ${{ inputs.quotes }}
+
       - name: Run alert check
+        if: inputs.quotes == ''
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python telegram_alerts.py --once
 
       - name: Persist state
+        if: inputs.quotes == ''
         run: |
           if [ -z "$(git status --porcelain alerts_state.json)" ]; then
             echo "sin cambios de estado"; exit 0
