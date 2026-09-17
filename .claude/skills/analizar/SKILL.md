@@ -21,6 +21,8 @@ get_quote(symbol="MRVL")
 
 Fijate en `is_market_open`: si es `false`, lo que tenés es el último cierre, y la ficha tiene que decirlo. `percent_change` se calcula contra `previous_close`, que es el cierre anterior, no el de hace un rato.
 
+**El campo `volume` no sirve con el mercado abierto.** Devuelve un acumulado parcial que no es comparable contra el volumen de cierre de ayer — vas a ver 457k contra 16.2M y parece colapso de interés cuando no lo es. Consecuencia práctica: con el mercado abierto **no se puede confirmar una ruptura por volumen**. Decilo en vez de sacar una conclusión falsa; `average_volume` sí es un promedio real y sirve de referencia.
+
 Después, las medias y el RSI. Pedí el diario para la estructura y el horario para el timing de entrada:
 
 ```
@@ -78,17 +80,57 @@ Este es el formato. Mantenelo corto; si algo no aporta a la decisión, borralo.
 **Estructura:** [dónde está parado respecto de sus medias y de los niveles
 previos, en dos o tres frases]
 
-**Plan:**
-- Entrada: [nivel y por qué ahí]
-- Stop: [nivel, debajo de qué referencia, y a cuántos ATR]
-- Objetivos: [el primero realista, el segundo si extiende]
-- R/R: [riesgo vs recorrido al primer objetivo]
-
 **En contra:** [lo que rompe la tesis — valuación, earnings cerca,
 divergencia con el consenso, beta alta, el papel ya corrió]
+
+---
+
+### VEREDICTO
+
+**LONG / SHORT / AFUERA**  ·  [a mercado | limit en X | recién si pasa X]
+
+| | |
+|---|---|
+| Entrada | 234.00 |
+| **SL** | 226.50  (-3.2%) |
+| **TP1** | 253.00  (+8.1%) — tomar mitad |
+| **TP2** | 270.00  (+15.4%) |
+| R/R a TP1 | 1:2.5 |
+| Tamaño | [% de cuenta para arriesgar 1%] |
+| Dónde | **SPOT** / **PERP a Nx** |
 ```
 
 Cerrá con una línea aclarando que es análisis técnico y de contexto, no asesoramiento financiero.
+
+## El veredicto no se negocia
+
+Esta es la parte que la gente lee. Nada de "podría subir si rompe pero ojo que". Una sola dirección, un número por campo, y si la respuesta honesta es **AFUERA**, decí AFUERA — es una respuesta válida y muchas veces la correcta.
+
+Los números tienen que ser consistentes entre sí, y el orden en que se calculan importa:
+
+1. **El SL sale de la estructura**, no de cuánto estás dispuesto a perder: debajo del soporte que invalida la tesis (una media, un mínimo previo, el piso de un rango).
+2. **Verificá que el SL sea de al menos 1 ATR.** Más ajustado que eso lo ejecuta el ruido antes de que la tesis se pruebe.
+3. **El TP1 es la primera resistencia real** — el máximo previo donde el precio ya giró, no un número redondo ni el target de un analista.
+4. **Recién ahí calculás el R/R.** Si da menos de 1:1.5, **el trade no existe a ese precio**: o buscás una entrada más abajo que lo arregle, o el veredicto es AFUERA. Este es el paso que más se saltea y el que evita la mayoría de los trades malos — un papel puede estar rompiendo al alza y aun así ser una mala entrada porque la resistencia está muy cerca del stop.
+5. **El tamaño** sale de la distancia al stop: arriesgar 1% de la cuenta con un stop a 3.2% son 31% de la cuenta en spot. Con beta arriba de 2, bajalo.
+
+## Spot o perp
+
+Si el ticker tiene perp, cerrá diciendo dónde operarlo. Tres datos deciden, en este orden:
+
+**1. Liquidez del perp contra la del subyacente.** Compará el OI y el volumen 24h del perp contra el notional diario de la acción (`average_volume` × precio). Si el perp mueve menos del ~5% del subyacente, el libro es fino: un stop puede ser barrido por una mecha que en la acción real no existiría. Para un stop ajustado (menos de ~4%), eso solo ya inclina a **spot**.
+
+**2. Funding.** Convertí la tasa horaria a anualizada (× 8760) y después a costo sobre el horizonte real del trade. Funding positivo = los largos pagan. Abajo de ~10% anualizado, en un swing de semanas el costo es décimas de punto: **no es un argumento contra el perp**. Arriba de 30-40% anualizado sí, y además avisa que el lado largo está lleno.
+
+**3. Riesgo de gap.** El perp opera 24/7; la acción abre con gap después de noticias de fin de semana. Si la tesis es sensible a titulares sectoriales, poder salir un domingo es una ventaja real del perp.
+
+Cuando recomiendes perp, dale un apalancamiento concreto y bajo, y asegurate de que la **liquidación quede bien lejos del SL** — si el SL está a 3% y entrás a 10x, te liquidan antes de que el stop se ejecute. Ese error convierte un trade planificado en una pérdida total de la posición.
+
+### Datos de Hyperliquid
+
+La API (`api.hyperliquid.xyz`) está **bloqueada por el proxy de egress**, y CoinDesk solo indexa los perps nativos de cripto — los mercados HIP-3 desplegados por builders (que es donde están las acciones, vía trade.xyz) no aparecen en `fetch_futures_instruments`. Que un ticker no figure ahí **no significa que no exista el perp**: verificalo por búsqueda antes de decir que no está.
+
+El camino que funciona es `web_fetch_exa` sobre la página del mercado. Dos advertencias: el precio que devuelve puede venir cacheado y no coincidir con el feed real, y dos lecturas de la misma página pueden dar funding distinto. Tomá el funding como orden de magnitud, no como número exacto, y decilo así en la ficha — el precio siempre de Twelve Data, nunca del scrape.
 
 ## Cuando la pregunta es por un sector
 
