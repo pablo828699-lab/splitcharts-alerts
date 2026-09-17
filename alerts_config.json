@@ -256,6 +256,34 @@
       "level": 368.0,
       "direction": "above",
       "note": "el muro 368-384 (VAL diario + OB bajista)"
+    },
+    {
+      "symbol": "AVGO",
+      "market": "stock",
+      "level": 350.94,
+      "direction": "above",
+      "note": "confirma rebote, ver long"
+    },
+    {
+      "symbol": "AVGO",
+      "market": "stock",
+      "level": 362.0,
+      "direction": "above",
+      "note": "entrada long (TP 369/380)"
+    },
+    {
+      "symbol": "AVGO",
+      "market": "stock",
+      "level": 335.8,
+      "direction": "below",
+      "note": "INVALIDACION: habilita 321/310"
+    },
+    {
+      "symbol": "AVGO",
+      "market": "stock",
+      "level": 369.25,
+      "direction": "above",
+      "note": "recupera SMA200, cambia sesgo"
     }
   ],
   "rsi_alerts": [
@@ -290,6 +318,14 @@
       "period": 14,
       "overbought": 50.0,
       "oversold": 30.0
+    },
+    {
+      "symbol": "AVGO",
+      "market": "stock",
+      "interval": "4h",
+      "period": 14,
+      "overbought": 70.0,
+      "oversold": 35.0
     }
   ],
   "_ayuda": {
