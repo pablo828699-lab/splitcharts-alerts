@@ -81,6 +81,13 @@
       "level": 159.0,
       "direction": "below",
       "note": "corto a 138"
+    },
+    {
+      "symbol": "AVGO",
+      "market": "stock",
+      "level": 382.1,
+      "direction": "above",
+      "note": "rompe resistencia long a 400"
     }
   ],
   "rsi_alerts": [
