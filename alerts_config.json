@@ -94,56 +94,56 @@
       "market": "stock",
       "level": 334.0,
       "direction": "below",
-      "note": "STOP LOSS AVGO (compra 357,19) - vender"
+      "note": "STOP LOSS AVGO (compra 357,24) - vender"
     },
     {
       "symbol": "AVGO",
       "market": "stock",
       "level": 460.0,
       "direction": "above",
-      "note": "TAKE PROFIT AVGO (compra 357,19)"
+      "note": "TAKE PROFIT AVGO (compra 357,24)"
     },
     {
       "symbol": "GOOGL",
       "market": "stock",
       "level": 328.0,
       "direction": "below",
-      "note": "STOP LOSS GOOGL (compra 348,68) - vender"
+      "note": "STOP LOSS GOOGL (compra 350,06) - vender"
     },
     {
       "symbol": "GOOGL",
       "market": "stock",
       "level": 375.0,
       "direction": "above",
-      "note": "TAKE PROFIT 1 GOOGL (compra 348,68)"
+      "note": "TAKE PROFIT 1 GOOGL (compra 350,06)"
     },
     {
       "symbol": "GOOGL",
       "market": "stock",
       "level": 400.0,
       "direction": "above",
-      "note": "TAKE PROFIT 2 GOOGL (compra 348,68)"
+      "note": "TAKE PROFIT 2 GOOGL (compra 350,06)"
     },
     {
       "symbol": "AMZN",
       "market": "stock",
       "level": 241.0,
       "direction": "below",
-      "note": "STOP LOSS AMZN (compra 256,46) - vender"
+      "note": "STOP LOSS AMZN (compra 257,47) - vender"
     },
     {
       "symbol": "AMZN",
       "market": "stock",
       "level": 270.0,
       "direction": "above",
-      "note": "TAKE PROFIT 1 AMZN (compra 256,46)"
+      "note": "TAKE PROFIT 1 AMZN (compra 257,47)"
     },
     {
       "symbol": "AMZN",
       "market": "stock",
       "level": 287.0,
       "direction": "above",
-      "note": "TAKE PROFIT 2 AMZN (compra 256,46)"
+      "note": "TAKE PROFIT 2 AMZN (compra 257,47)"
     }
   ],
   "rsi_alerts": [
