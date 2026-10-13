@@ -144,6 +144,41 @@
       "level": 287.0,
       "direction": "above",
       "note": "TAKE PROFIT 2 AMZN (compra 257,47)"
+    },
+    {
+      "symbol": "MU",
+      "market": "stock",
+      "level": 926.0,
+      "direction": "below",
+      "note": "pierde estructura 3 meses -> 910/868"
+    },
+    {
+      "symbol": "MU",
+      "market": "stock",
+      "level": 910.0,
+      "direction": "below",
+      "note": "pierde soporte agosto"
+    },
+    {
+      "symbol": "MU",
+      "market": "stock",
+      "level": 952.62,
+      "direction": "above",
+      "note": "recupera max de hoy, rebote valido"
+    },
+    {
+      "symbol": "MU",
+      "market": "stock",
+      "level": 1045.0,
+      "direction": "above",
+      "note": "habilita 1088/1108"
+    },
+    {
+      "symbol": "MU",
+      "market": "stock",
+      "level": 1108.0,
+      "direction": "above",
+      "note": "rompe doble techo -> 1213"
     }
   ],
   "rsi_alerts": [
@@ -178,6 +213,14 @@
       "period": 14,
       "overbought": 50.0,
       "oversold": 30.0
+    },
+    {
+      "symbol": "MU",
+      "market": "stock",
+      "interval": "4h",
+      "period": 14,
+      "overbought": 70.0,
+      "oversold": 35.0
     }
   ],
   "_ayuda": {
