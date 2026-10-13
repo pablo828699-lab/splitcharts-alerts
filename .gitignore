@@ -1,0 +1,7 @@
+# Bytecode de Python (se regenera en cada corrida)
+__pycache__/
+*.py[cod]
+
+# Entornos virtuales locales
+.venv/
+venv/
