@@ -228,6 +228,62 @@
       "level": 405.0,
       "direction": "above",
       "note": "TAKE PROFIT 2 GLD (XAU 4400)"
+    },
+    {
+      "symbol": "TSM",
+      "market": "stock",
+      "level": 412.0,
+      "direction": "below",
+      "note": "TRAMO 2 COMPRA TSM 500 USD (order block)"
+    },
+    {
+      "symbol": "MU",
+      "market": "stock",
+      "level": 885.0,
+      "direction": "below",
+      "note": "TRAMO 2 COMPRA MU 250 USD (piso FVG)"
+    },
+    {
+      "symbol": "NVDA",
+      "market": "stock",
+      "level": 211.0,
+      "direction": "below",
+      "note": "TRAMO 2 COMPRA NVDA 250 USD (POC)"
+    },
+    {
+      "symbol": "GLD",
+      "market": "stock",
+      "level": 375.0,
+      "direction": "below",
+      "note": "TRAMO 2 COMPRA GLD 1000 USD (spot 4130)"
+    },
+    {
+      "symbol": "SLV",
+      "market": "stock",
+      "level": 50.0,
+      "direction": "below",
+      "note": "TRAMO 2 COMPRA SLV 1000 USD (zona 49,50-50)"
+    },
+    {
+      "symbol": "TSM",
+      "market": "stock",
+      "level": 435.0,
+      "direction": "above",
+      "note": "TRAMO 3 COMPRA TSM 500 USD (ruptura)"
+    },
+    {
+      "symbol": "MU",
+      "market": "stock",
+      "level": 935.0,
+      "direction": "above",
+      "note": "TRAMO 3 COMPRA MU 250 USD (ruptura)"
+    },
+    {
+      "symbol": "NVDA",
+      "market": "stock",
+      "level": 225.0,
+      "direction": "above",
+      "note": "TRAMO 3 COMPRA NVDA 250 USD (ruptura)"
     }
   ],
   "rsi_alerts": [
