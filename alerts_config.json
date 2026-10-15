@@ -146,39 +146,88 @@
       "note": "TAKE PROFIT 2 AMZN (compra 257,47)"
     },
     {
-      "symbol": "MU",
+      "symbol": "NVDA",
       "market": "stock",
-      "level": 926.0,
+      "level": 200.0,
       "direction": "below",
-      "note": "pierde estructura 3 meses -> 910/868"
+      "note": "STOP LOSS NVDA (compra 222,55) - vender"
+    },
+    {
+      "symbol": "NVDA",
+      "market": "stock",
+      "level": 242.0,
+      "direction": "above",
+      "note": "TAKE PROFIT 1 NVDA (SMA 20)"
+    },
+    {
+      "symbol": "NVDA",
+      "market": "stock",
+      "level": 260.0,
+      "direction": "above",
+      "note": "TAKE PROFIT 2 NVDA (260-275)"
     },
     {
       "symbol": "MU",
       "market": "stock",
-      "level": 910.0,
+      "level": 850.0,
       "direction": "below",
-      "note": "pierde soporte agosto"
+      "note": "STOP LOSS MU (compra 913,06) - vender"
     },
     {
       "symbol": "MU",
       "market": "stock",
-      "level": 952.62,
+      "level": 1010.0,
       "direction": "above",
-      "note": "recupera max de hoy, rebote valido"
+      "note": "TAKE PROFIT 1 MU (retest POC)"
     },
     {
       "symbol": "MU",
       "market": "stock",
-      "level": 1045.0,
+      "level": 1120.0,
       "direction": "above",
-      "note": "habilita 1088/1108"
+      "note": "TAKE PROFIT 2 MU (1120-1180)"
     },
     {
-      "symbol": "MU",
+      "symbol": "TSM",
       "market": "stock",
-      "level": 1108.0,
+      "level": 390.0,
+      "direction": "below",
+      "note": "STOP LOSS TSM (compra 433,46) - vender"
+    },
+    {
+      "symbol": "TSM",
+      "market": "stock",
+      "level": 455.0,
       "direction": "above",
-      "note": "rompe doble techo -> 1213"
+      "note": "TAKE PROFIT 1 TSM"
+    },
+    {
+      "symbol": "TSM",
+      "market": "stock",
+      "level": 485.0,
+      "direction": "above",
+      "note": "TAKE PROFIT 2 TSM (485-500)"
+    },
+    {
+      "symbol": "GLD",
+      "market": "stock",
+      "level": 350.0,
+      "direction": "below",
+      "note": "STOP LOSS GLD (compra 377,39) - vender"
+    },
+    {
+      "symbol": "GLD",
+      "market": "stock",
+      "level": 392.0,
+      "direction": "above",
+      "note": "TAKE PROFIT 1 GLD (XAU 4280)"
+    },
+    {
+      "symbol": "GLD",
+      "market": "stock",
+      "level": 405.0,
+      "direction": "above",
+      "note": "TAKE PROFIT 2 GLD (XAU 4400)"
     }
   ],
   "rsi_alerts": [
@@ -213,14 +262,6 @@
       "period": 14,
       "overbought": 50.0,
       "oversold": 30.0
-    },
-    {
-      "symbol": "MU",
-      "market": "stock",
-      "interval": "4h",
-      "period": 14,
-      "overbought": 70.0,
-      "oversold": 35.0
     }
   ],
   "_ayuda": {
