@@ -214,6 +214,13 @@
       "level": 225.0,
       "direction": "above",
       "note": "TRAMO 3 COMPRA NVDA 250 USD (ruptura)"
+    },
+    {
+      "symbol": "LLY",
+      "market": "stock",
+      "level": 1218.71,
+      "direction": "below",
+      "note": "vender"
     }
   ],
   "rsi_alerts": [
