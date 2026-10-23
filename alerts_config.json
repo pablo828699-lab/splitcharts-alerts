@@ -34,79 +34,9 @@
       "note": "long"
     },
     {
-      "symbol": "SILVER",
-      "market": "stock",
-      "level": 62.44,
-      "direction": "below",
-      "note": "ver long a 73"
-    },
-    {
-      "symbol": "COIN",
-      "market": "stock",
-      "level": 159.0,
-      "direction": "above",
-      "note": "ver long"
-    },
-    {
-      "symbol": "META",
-      "market": "stock",
-      "level": 628.0,
-      "direction": "above",
-      "note": "ver largo"
-    },
-    {
-      "symbol": "ORCL",
-      "market": "stock",
-      "level": 137.0,
-      "direction": "below",
-      "note": "ver long"
-    },
-    {
-      "symbol": "ORCL",
-      "market": "stock",
-      "level": 151.0,
-      "direction": "above",
-      "note": "ver long"
-    },
-    {
-      "symbol": "URA",
-      "market": "stock",
-      "level": 46.0,
-      "direction": "above",
-      "note": "ver entrada"
-    },
-    {
-      "symbol": "PLTR",
-      "market": "stock",
-      "level": 159.0,
-      "direction": "below",
-      "note": "corto a 138"
-    },
-    {
-      "symbol": "AVGO",
-      "market": "stock",
-      "level": 382.1,
-      "direction": "above",
-      "note": "rompe resistencia long a 400"
-    },
-    {
-      "symbol": "AVGO",
-      "market": "stock",
-      "level": 334.0,
-      "direction": "below",
-      "note": "STOP LOSS AVGO (compra 357,24) - vender"
-    },
-    {
-      "symbol": "AVGO",
-      "market": "stock",
-      "level": 460.0,
-      "direction": "above",
-      "note": "TAKE PROFIT AVGO (compra 357,24)"
-    },
-    {
       "symbol": "GOOGL",
       "market": "stock",
-      "level": 328.0,
+      "level": 314.5,
       "direction": "below",
       "note": "STOP LOSS GOOGL (compra 350,06) - vender"
     },
