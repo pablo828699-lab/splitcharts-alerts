@@ -221,6 +221,20 @@
       "level": 1218.71,
       "direction": "below",
       "note": "vender"
+    },
+    {
+      "symbol": "GOOGL",
+      "market": "stock",
+      "level": 288.66,
+      "direction": "above",
+      "note": "compra"
+    },
+    {
+      "symbol": "MRVL",
+      "market": "stock",
+      "level": 225.72,
+      "direction": "above",
+      "note": "compra"
     }
   ],
   "rsi_alerts": [
