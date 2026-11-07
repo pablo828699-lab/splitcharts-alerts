@@ -41,20 +41,6 @@
       "note": "STOP LOSS GLD (compra 377,39) - vender"
     },
     {
-      "symbol": "GLD",
-      "market": "stock",
-      "level": 392.0,
-      "direction": "above",
-      "note": "TAKE PROFIT 1 GLD (XAU 4280)"
-    },
-    {
-      "symbol": "GLD",
-      "market": "stock",
-      "level": 405.0,
-      "direction": "above",
-      "note": "TAKE PROFIT 2 GLD (XAU 4400)"
-    },
-    {
       "symbol": "TSM",
       "market": "stock",
       "level": 416.6,
@@ -116,6 +102,111 @@
       "level": 225.72,
       "direction": "above",
       "note": "compra"
+    },
+    {
+      "symbol": "AVGO",
+      "market": "stock",
+      "level": 320.0,
+      "direction": "above",
+      "note": "TAKE PROFIT 1 AVGO (resistencia tecnica)"
+    },
+    {
+      "symbol": "AVGO",
+      "market": "stock",
+      "level": 460.0,
+      "direction": "above",
+      "note": "TAKE PROFIT 2 AVGO (objetivo propio)"
+    },
+    {
+      "symbol": "GOOGL",
+      "market": "stock",
+      "level": 296.5,
+      "direction": "above",
+      "note": "TAKE PROFIT 1 GOOGL (resistencia tecnica)"
+    },
+    {
+      "symbol": "GOOGL",
+      "market": "stock",
+      "level": 375.0,
+      "direction": "above",
+      "note": "TAKE PROFIT 2 GOOGL (objetivo propio)"
+    },
+    {
+      "symbol": "AMZN",
+      "market": "stock",
+      "level": 265.0,
+      "direction": "above",
+      "note": "TAKE PROFIT 1 AMZN (resistencia tecnica)"
+    },
+    {
+      "symbol": "AMZN",
+      "market": "stock",
+      "level": 270.0,
+      "direction": "above",
+      "note": "TAKE PROFIT 2 AMZN (objetivo propio)"
+    },
+    {
+      "symbol": "NVDA",
+      "market": "stock",
+      "level": 200.0,
+      "direction": "above",
+      "note": "TAKE PROFIT 1 NVDA (resistencia tecnica)"
+    },
+    {
+      "symbol": "NVDA",
+      "market": "stock",
+      "level": 242.0,
+      "direction": "above",
+      "note": "TAKE PROFIT 2 NVDA (objetivo propio)"
+    },
+    {
+      "symbol": "TSM",
+      "market": "stock",
+      "level": 403.0,
+      "direction": "above",
+      "note": "TAKE PROFIT 1 TSM (resistencia tecnica)"
+    },
+    {
+      "symbol": "TSM",
+      "market": "stock",
+      "level": 455.0,
+      "direction": "above",
+      "note": "TAKE PROFIT 2 TSM (objetivo propio)"
+    },
+    {
+      "symbol": "MU",
+      "market": "stock",
+      "level": 849.0,
+      "direction": "above",
+      "note": "TAKE PROFIT 1 MU (resistencia tecnica)"
+    },
+    {
+      "symbol": "MU",
+      "market": "stock",
+      "level": 1010.0,
+      "direction": "above",
+      "note": "TAKE PROFIT 2 MU (objetivo propio)"
+    },
+    {
+      "symbol": "GLD",
+      "market": "stock",
+      "level": 389.0,
+      "direction": "above",
+      "note": "TAKE PROFIT 1 GLD (resistencia tecnica)"
+    },
+    {
+      "symbol": "GLD",
+      "market": "stock",
+      "level": 392.0,
+      "direction": "above",
+      "note": "TAKE PROFIT 2 GLD (objetivo propio)"
+    },
+    {
+      "symbol": "SLV",
+      "market": "stock",
+      "level": 48.5,
+      "direction": "above",
+      "note": "TAKE PROFIT 1 SLV (resistencia tecnica)"
     }
   ],
   "rsi_alerts": [
