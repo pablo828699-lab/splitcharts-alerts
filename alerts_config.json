@@ -207,6 +207,13 @@
       "level": 48.5,
       "direction": "above",
       "note": "TAKE PROFIT 1 SLV (resistencia tecnica)"
+    },
+    {
+      "symbol": "BTCUSDT",
+      "market": "crypto",
+      "level": 64493.4,
+      "direction": "below",
+      "note": ""
     }
   ],
   "rsi_alerts": [
